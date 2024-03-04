@@ -1,0 +1,18 @@
+{
+    "configurations": [
+        {
+            "name": "Edited",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE",
+                "STM32F030x8"
+            ]
+        }
+    ],
+    "version": 4
+}
