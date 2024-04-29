@@ -78,7 +78,8 @@ Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c \
 Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/port.c \
 Core/Src/i2c.c \
 Core/Src/ds1307_for_stm32_hal.c \
-Core/Src/ee24.c
+Core/Src/ee24.c \
+Core/Src/sha-256.c
 
 # ASM sources
 ASM_SOURCES =  \

@@ -86,12 +86,12 @@ void Gsm_SendSms(char *phonenumber, char *message) {
   Gsm_SendString("AT+CREG=1\r\n");
   Gsm_SendString("AT+CMGF=1\r\n");
   _GSM_DELAY(1000);
-  
+
   char ss[30] = {0};
   sprintf(ss, "AT+CMGS=\"%s\"", phonenumber);
   Gsm_SendString(ss);
   _GSM_DELAY(1000);
-  
+
   Gsm_SendString("Hello from stm32");
   Gsm_SendData(26);
   _GSM_DELAY(1000);

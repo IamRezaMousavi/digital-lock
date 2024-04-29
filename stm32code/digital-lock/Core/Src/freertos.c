@@ -32,9 +32,10 @@
 #include "ee24.h"
 #include "gsm.h"
 #include "lcd.h"
-#include "modes.h"
-#include "usart.h"
 #include "local_config.h"
+#include "modes.h"
+#include "sha-256.h"
+#include "usart.h"
 #include <limits.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -77,16 +78,17 @@ Mode               activeMode             = NORMAL;
 uint8_t            ee24_data[EEPROM_SIZE] = {0};
 char               welcomeMessage[8]      = "WELCOME";
 char               errorMessage[8]        = "ERROR";
-char               password[16]           = "235689";
-char               passwordtemp[16]       = {0};
-uint8_t            passwordIndex          = 0;
-uint8_t            relayDelay             = 5;
-uint8_t            userLastId             = 1;
+char               password[SIZE_OF_SHA_256_HASH_STRING]
+    = "ff98ef67b552532453d1ad8b1912a776ab1b30bf3814fa009b8ffe3c3e5b7efe"; // 235689
+char    passwordtemp[16] = {0};
+uint8_t passwordIndex    = 0;
+uint8_t relayDelay       = 5;
+uint8_t userLastId       = 1;
 
 #ifdef PHONENUMBER
-char               phoneNumber[]          = PHONENUMBER;
+char phoneNumber[] = PHONENUMBER;
 #else
-char               phoneNumber[]          = "099****8679";
+char phoneNumber[] = "099****8679";
 #endif
 
 /* USER CODE END Variables */
@@ -167,7 +169,7 @@ void openLock() {
 void checkPasswordAndOpen() {
   activeMode = CHECK_PASSWORD;
 
-  int result = strcmp(password, passwordtemp);
+  int result = hash_check(passwordtemp, password);
 
   if (result == 0) {
     // if same password
