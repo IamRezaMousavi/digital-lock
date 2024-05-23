@@ -30,10 +30,10 @@ class UserCard extends StatefulWidget {
 class _UserCardState extends State<UserCard> {
   @override
   Widget build(BuildContext context) {
-    String title = widget.user.name;
+    var title = widget.user.name;
 
     if (widget.user.date != null) {
-      String dateTime = DateFormat('yyyy-MM-dd HH:mm')
+      final dateTime = DateFormat('yyyy-MM-dd HH:mm')
           .format(DateTime.fromMillisecondsSinceEpoch(widget.user.date!));
       title += ' $dateTime';
     }

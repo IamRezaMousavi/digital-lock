@@ -40,7 +40,7 @@ class AwesomeSnackbarContent extends StatelessWidget {
   final double? messageFontSize;
 
   const AwesomeSnackbarContent({
-    Key? key,
+    super.key,
     this.color,
     this.titleFontSize,
     this.messageFontSize,
@@ -48,25 +48,25 @@ class AwesomeSnackbarContent extends StatelessWidget {
     required this.message,
     required this.contentType,
     this.inMaterialBanner = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
-    bool isRTL = Directionality.of(context) == TextDirection.rtl;
+    final isRTL = Directionality.of(context) == TextDirection.rtl;
 
     final size = MediaQuery.of(context).size;
 
     // screen dimensions
-    bool isMobile = size.width <= 768;
-    bool isTablet = size.width > 768 && size.width <= 992;
+    final isMobile = size.width <= 768;
+    final isTablet = size.width > 768 && size.width <= 992;
 
     /// for reflecting different color shades in the SnackBar
     final hsl = HSLColor.fromColor(color ?? contentType.color!);
     final hslDark = hsl.withLightness((hsl.lightness - 0.1).clamp(0.0, 1.0));
 
-    double horizontalPadding = 0.0;
-    double leftSpace = size.width * 0.12;
-    double rightSpace = size.width * 0.12;
+    var horizontalPadding = 0.0;
+    var leftSpace = size.width * 0.12;
+    final rightSpace = size.width * 0.12;
 
     if (isMobile) {
       horizontalPadding = size.width * 0.01;

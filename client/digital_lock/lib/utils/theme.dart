@@ -15,13 +15,13 @@ class AppTheme extends ChangeNotifier {
     _loadprefs();
   }
 
-  tagglethememode() {
+  void tagglethememode() {
     _darktheme = !_darktheme;
     _saveprefs();
     notifyListeners();
   }
 
-  changeThemeColor(Color newColor) {
+  void changeThemeColor(Color newColor) {
     _themecolor = newColor;
     notifyListeners();
   }
@@ -38,6 +38,6 @@ class AppTheme extends ChangeNotifier {
 
   _saveprefs() async {
     await _initprefs();
-    _prefs?.setBool(key, _darktheme);
+    await _prefs?.setBool(key, _darktheme);
   }
 }

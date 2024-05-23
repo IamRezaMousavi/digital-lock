@@ -18,14 +18,12 @@ class Message {
         date: json['date'],
       );
 
-  Map<String, dynamic> toMap() {
-    return {
+  Map<String, dynamic> toMap() => {
       'id': id,
       'address': address,
       'text': text,
       'date': date,
     };
-  }
 }
 
 class MessageText {
@@ -39,12 +37,10 @@ class MessageText {
         code: json['code'],
       );
 
-  Map<String, dynamic> toMap() {
-    return {
+  Map<String, dynamic> toMap() => {
       'name': name,
       'code': code,
     };
-  }
 }
 
 class User {
@@ -64,11 +60,9 @@ class User {
         date: json['date'],
       );
 
-  Map<String, dynamic> toMap() {
-    return {
+  Map<String, dynamic> toMap() => {
       'id': id,
       'name': name,
       'date': date,
     };
-  }
 }

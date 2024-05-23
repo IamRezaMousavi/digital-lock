@@ -23,8 +23,8 @@ class _UserPageState extends State<UserPage> {
   final idController = TextEditingController();
 
   @override
-  void initState() {
-    UsersDB.instance.getUsers().then((usersList) {
+  Future<void> initState() async {
+    await UsersDB.instance.getUsers().then((usersList) {
       setState(() {
         users = usersList;
       });
@@ -32,20 +32,17 @@ class _UserPageState extends State<UserPage> {
     super.initState();
   }
 
-  Future<void> _refresh() {
-    return Future.delayed(const Duration(seconds: 4));
-  }
+  Future<void> _refresh() => Future.delayed(const Duration(seconds: 4));
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
+  Widget build(BuildContext context) => Scaffold(
       appBar: AppBar(
         title: const Center(
           child: Text('Users'),
         ),
         leading: IconButton(
-          onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(
+          onPressed: () async {
+            await Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => const AppSettingsPage(),
             ));
           },
@@ -73,7 +70,7 @@ class _UserPageState extends State<UserPage> {
               name: nameController.text,
               date: DateTime.now().millisecondsSinceEpoch,
             );
-            int id = await UsersDB.instance.add(newUser);
+            final id = await UsersDB.instance.add(newUser);
             setState(() {
               newUser.id = id;
               users.insert(0, newUser);
@@ -139,8 +136,8 @@ class _UserPageState extends State<UserPage> {
                           });
                         },
                         onDelete: () {
-                          setState(() {
-                            UsersDB.instance.remove(user.id!);
+                          setState(() async {
+                            await UsersDB.instance.remove(user.id!);
                             users.removeAt(index);
                           });
                         },
@@ -151,5 +148,4 @@ class _UserPageState extends State<UserPage> {
         ],
       ),
     );
-  }
 }

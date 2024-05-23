@@ -3,9 +3,9 @@ import 'package:vibration/vibration.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 Future<void> sendSms(String to, String message) async {
-  final Telephony telephony = Telephony.instance;
+  final telephony = Telephony.instance;
   // ignore: unused_local_variable
-  bool? permission = await telephony.requestSmsPermissions;
+  final permission = await telephony.requestSmsPermissions;
   await telephony.sendSms(
     to: to,
     message: message,
@@ -13,22 +13,23 @@ Future<void> sendSms(String to, String message) async {
       Fluttertoast.showToast(msg: 'Message $status');
     },
   );
-  Vibration.vibrate(duration: 500);
+  await Vibration.vibrate(duration: 500);
 }
 
-reciveSms(dynamic Function(SmsMessage) onNewMessage) {
-  final Telephony telephony = Telephony.instance;
-  telephony.listenIncomingSms(
-      onNewMessage: (SmsMessage message) {
+void reciveSms(Function(SmsMessage) onNewMessage) {
+  Telephony.instance
+    .listenIncomingSms(
+      onNewMessage: (SmsMessage message) async {
         onNewMessage(message);
-        Fluttertoast.showToast(msg: 'Sms Recived');
+        await Fluttertoast.showToast(msg: 'Sms Recived');
       },
-      onBackgroundMessage: backgroundMessageHandler);
+      onBackgroundMessage: backgroundMessageHandler
+  );
 }
 
-backgroundMessageHandler(SmsMessage message) {
+Future<void> backgroundMessageHandler(SmsMessage message) async {
   // Handle background message
 
   // Use plugins
-  Vibration.vibrate(duration: 500);
+  await Vibration.vibrate(duration: 500);
 }

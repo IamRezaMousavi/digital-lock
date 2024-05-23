@@ -47,7 +47,7 @@ class _MainPageState extends State<MainPage> {
                     'Phone Number is not set',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  const Text("Please enter the phone number:"),
+                  const Text('Please enter the phone number:'),
                   PhoneNumberInput(
                     onStateChanged: (isValid, phoneNumber) {
                       if (isValid) {

@@ -60,8 +60,8 @@ class LoginPage extends StatelessWidget {
                 ),
                 FilledButton(
                   child: const Text('Login'),
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
+                  onPressed: () async {
+                    await Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => const MainPage(),
                     ));
                   },

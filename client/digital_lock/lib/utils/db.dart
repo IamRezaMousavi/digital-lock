@@ -2,7 +2,6 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 
-import 'dart:io';
 
 import './models.dart';
 
@@ -14,9 +13,9 @@ class MessagesDB {
   Future<Database> get database async => _database ??= await _initDatabase();
 
   Future<Database> _initDatabase() async {
-    Directory documentsDir = await getApplicationDocumentsDirectory();
-    String path = join(documentsDir.path, 'messages.db');
-    return await openDatabase(
+    final documentsDir = await getApplicationDocumentsDirectory();
+    final path = join(documentsDir.path, 'messages.db');
+    return openDatabase(
       path,
       version: 1,
       onCreate: _onCreate,
@@ -35,28 +34,28 @@ class MessagesDB {
   }
 
   Future<List<Message>> getMessages() async {
-    Database db = await instance.database;
+    final db = await instance.database;
     // reverse messages list
-    var messages = await db.query('messages', orderBy: 'date DESC');
-    List<Message> messagesList = messages.isNotEmpty
+    final messages = await db.query('messages', orderBy: 'date DESC');
+    final messagesList = messages.isNotEmpty
         ? messages.map((e) => Message.fromMap(e)).toList()
-        : [];
+        : <Message>[];
     return messagesList;
   }
 
   Future<int> add(Message message) async {
-    Database db = await instance.database;
-    return await db.insert('messages', message.toMap());
+    final db = await instance.database;
+    return db.insert('messages', message.toMap());
   }
 
   Future<int> remove(int id) async {
-    Database db = await instance.database;
-    return await db.delete('messages', where: 'id = ?', whereArgs: [id]);
+    final db = await instance.database;
+    return db.delete('messages', where: 'id = ?', whereArgs: [id]);
   }
 
   Future<int> update(Message message) async {
-    Database db = await instance.database;
-    return await db.update('messages', message.toMap(),
+    final db = await instance.database;
+    return db.update('messages', message.toMap(),
         where: 'id = ?', whereArgs: [message.id]);
   }
 }
@@ -69,9 +68,9 @@ class UsersDB {
   Future<Database> get database async => _database ??= await _initDatabase();
 
   Future<Database> _initDatabase() async {
-    Directory documentsDir = await getApplicationDocumentsDirectory();
-    String path = join(documentsDir.path, 'users.db');
-    return await openDatabase(
+    final documentsDir = await getApplicationDocumentsDirectory();
+    final path = join(documentsDir.path, 'users.db');
+    return openDatabase(
       path,
       version: 1,
       onCreate: _onCreate,
@@ -89,27 +88,27 @@ class UsersDB {
   }
 
   Future<List<User>> getUsers() async {
-    Database db = await instance.database;
+    final db = await instance.database;
     // reverse list
-    var users = await db.query('users', orderBy: 'date DESC');
-    List<User> usersList =
-        users.isNotEmpty ? users.map((e) => User.fromMap(e)).toList() : [];
+    final users = await db.query('users', orderBy: 'date DESC');
+    final usersList =
+        users.isNotEmpty ? users.map((e) => User.fromMap(e)).toList() : <User>[];
     return usersList;
   }
 
   Future<int> add(User user) async {
-    Database db = await instance.database;
-    return await db.insert('users', user.toMap());
+    final db = await instance.database;
+    return db.insert('users', user.toMap());
   }
 
   Future<int> remove(int id) async {
-    Database db = await instance.database;
-    return await db.delete('users', where: 'id = ?', whereArgs: [id]);
+    final db = await instance.database;
+    return db.delete('users', where: 'id = ?', whereArgs: [id]);
   }
 
   Future<int> update(User user) async {
-    Database db = await instance.database;
-    return await db
+    final db = await instance.database;
+    return db
         .update('users', user.toMap(), where: 'id = ?', whereArgs: [user.id]);
   }
 }

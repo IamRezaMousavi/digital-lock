@@ -16,8 +16,7 @@ class MyTextField extends StatelessWidget {
   TextInputType? textInputType;
 
   @override
-  Widget build(BuildContext context) {
-    return Padding(
+  Widget build(BuildContext context) => Padding(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
       child: TextField(
         controller: controller,
@@ -29,5 +28,4 @@ class MyTextField extends StatelessWidget {
         ),
       ),
     );
-  }
 }

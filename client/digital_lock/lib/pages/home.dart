@@ -26,8 +26,8 @@ class _HomePageState extends State<HomePage> {
   final textController = TextEditingController();
 
   @override
-  void initState() {
-    MessagesDB.instance.getMessages().then((messagesList) {
+  Future<void> initState() async {
+    await MessagesDB.instance.getMessages().then((messagesList) {
       setState(() {
         messages = messagesList;
       });
@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage> {
     reciveSms((SmsMessage message) async {
       final newMessage = Message(
           address: message.address, text: message.body, date: message.date);
-      int id = await MessagesDB.instance.add(newMessage);
+      final id = await MessagesDB.instance.add(newMessage);
       setState(() {
         newMessage.id = id;
         messages.insert(0, newMessage);
@@ -44,9 +44,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
-  Future<void> _refresh() {
-    return Future.delayed(const Duration(seconds: 4));
-  }
+  Future<void> _refresh() => Future.delayed(const Duration(seconds: 4));
 
   @override
   Widget build(BuildContext context) {
@@ -58,8 +56,8 @@ class _HomePageState extends State<HomePage> {
           child: Text('Digital Lock'),
         ),
         leading: IconButton(
-          onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(
+          onPressed: () async {
+            await Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => const AppSettingsPage(),
             ));
           },
@@ -89,7 +87,7 @@ class _HomePageState extends State<HomePage> {
               text: textController.text,
               date: DateTime.now().millisecondsSinceEpoch,
             );
-            int id = await MessagesDB.instance.add(newMessage);
+            final id = await MessagesDB.instance.add(newMessage);
             setState(() {
               newMessage.id = id;
               messages.insert(0, newMessage);
@@ -121,8 +119,8 @@ class _HomePageState extends State<HomePage> {
                       return SmsCard(
                         message: message,
                         onSend: () async {
-                          String status = '';
-                          bool isOk = false;
+                          var status = '';
+                          var isOk = false;
                           if (dataStorage.phoneNumber.isNotEmpty) {
                             status = 'Ok!';
                             isOk = true;
@@ -139,7 +137,7 @@ class _HomePageState extends State<HomePage> {
                               backgroundColor: Colors.transparent,
                               content: AwesomeSnackbarContent(
                                 title: status,
-                                message: message.text ?? "",
+                                message: message.text ?? '',
                                 contentType: isOk
                                     ? ContentType.success
                                     : ContentType.failure,
@@ -149,7 +147,7 @@ class _HomePageState extends State<HomePage> {
                         onSelect: () {
                           setState(() {
                             if (selectedIndex == null) {
-                              textController.text = message.text ?? "";
+                              textController.text = message.text ?? '';
                               selectedIndex = index;
                             } else {
                               textController.text = '';
@@ -158,8 +156,8 @@ class _HomePageState extends State<HomePage> {
                           });
                         },
                         onDelete: () {
-                          setState(() {
-                            MessagesDB.instance.remove(message.id!);
+                          setState(() async {
+                            await MessagesDB.instance.remove(message.id!);
                             messages.removeAt(index);
                           });
                         },

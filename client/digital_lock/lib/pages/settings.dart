@@ -24,19 +24,19 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     final dataStorage = Provider.of<DataStorage>(context);
 
-    bool welcomeMessageChanged = false;
+    var welcomeMessageChanged = false;
     final welcomeMessageController = TextEditingController();
 
-    bool errorMessageChanged = false;
+    var errorMessageChanged = false;
     final errorMessageController = TextEditingController();
 
-    bool phoneNumberChanged = false;
+    var phoneNumberChanged = false;
     final phoneNumberController = TextEditingController();
 
-    bool passwordChanged = false;
+    var passwordChanged = false;
     final passwordController = TextEditingController();
 
-    bool relayTimeChanged = false;
+    var relayTimeChanged = false;
     final relayTimeController = TextEditingController();
 
     return Scaffold(
@@ -45,8 +45,8 @@ class _SettingsPageState extends State<SettingsPage> {
           child: Text('Settings'),
         ),
         leading: IconButton(
-          onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(
+          onPressed: () async {
+            await Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => const AppSettingsPage(),
             ));
           },
@@ -61,24 +61,24 @@ class _SettingsPageState extends State<SettingsPage> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 TextFieldCard(
-                  title: "Welcome Message",
-                  description: "Set Welcome Message",
+                  title: 'Welcome Message',
+                  description: 'Set Welcome Message',
                   controller: welcomeMessageController,
                   onActive: (isActive) {
                     welcomeMessageChanged = isActive!;
                   },
                 ),
                 TextFieldCard(
-                  title: "Error Message",
-                  description: "Set Error Message",
+                  title: 'Error Message',
+                  description: 'Set Error Message',
                   controller: errorMessageController,
                   onActive: (isActive) {
                     errorMessageChanged = isActive!;
                   },
                 ),
                 TextFieldCard(
-                  title: "Phone Number",
-                  description: "Set Mobile Phone Number",
+                  title: 'Phone Number',
+                  description: 'Set Mobile Phone Number',
                   controller: phoneNumberController,
                   inputType: TextInputType.number,
                   onActive: (isActive) {
@@ -86,19 +86,19 @@ class _SettingsPageState extends State<SettingsPage> {
                   },
                 ),
                 TextFieldCard(
-                  title: "Password",
-                  description: "Set New Password",
+                  title: 'Password',
+                  description: 'Set New Password',
                   controller: passwordController,
                   onActive: (isActive) {
                     passwordChanged = isActive!;
                   },
                 ),
                 TextFieldCard(
-                  title: "Relay Time",
-                  description: "Set Relay Time",
+                  title: 'Relay Time',
+                  description: 'Set Relay Time',
                   controller: relayTimeController,
                   inputType: TextInputType.number,
-                  suffixText: "S",
+                  suffixText: 'S',
                   onActive: (isActive) {
                     relayTimeChanged = isActive!;
                   },
@@ -107,39 +107,39 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
           ),
           ElevatedButton(
-              onPressed: () {
-                var req = {};
-                req["code"] = Mode.GET_SETTINGS_FROM_SMS.index;
+              onPressed: () async {
+                final req = {};
+                req['code'] = Mode.GET_SETTINGS_FROM_SMS.index;
                 if (dataStorage.phoneNumber.isEmpty) {
                   return;
                 }
 
                 if (welcomeMessageChanged) {
-                  req["welMes"] = welcomeMessageController.text;
+                  req['welMes'] = welcomeMessageController.text;
                 }
 
                 if (errorMessageChanged) {
-                  req["errMes"] = errorMessageController.text;
+                  req['errMes'] = errorMessageController.text;
                 }
 
                 if (phoneNumberChanged) {
-                  req["phoneNum"] = phoneNumberController.text;
+                  req['phoneNum'] = phoneNumberController.text;
                 }
 
                 if (passwordChanged) {
-                  req["passw"] = passwordController.text;
+                  req['passw'] = passwordController.text;
                 }
 
                 if (relayTimeChanged) {
-                  req["relayTime"] = relayTimeController.text;
+                  req['relayTime'] = relayTimeController.text;
                 }
 
-                String reqMessage = jsonEncode(req);
-                sendSms(dataStorage.phoneNumber, reqMessage);
+                final reqMessage = jsonEncode(req);
+                await sendSms(dataStorage.phoneNumber, reqMessage);
               },
               child: const Row(
                 children: [
-                  Text("Send New Settings"),
+                  Text('Send New Settings'),
                   Icon(Icons.send),
                 ],
               ))

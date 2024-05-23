@@ -27,8 +27,7 @@ class _TextFieldCardState extends State<TextFieldCard> {
   bool isActive = false;
 
   @override
-  Widget build(BuildContext context) {
-    return Card(
+  Widget build(BuildContext context) => Card(
         child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -38,12 +37,12 @@ class _TextFieldCardState extends State<TextFieldCard> {
             Text(widget.description),
             Checkbox(
               value: isActive,
-              onChanged: ((value) {
+              onChanged: (value) {
                 setState(() {
                   isActive = value!;
                   widget.onActive(value);
                 });
-              }),
+              },
             ),
           ],
         ),
@@ -59,5 +58,4 @@ class _TextFieldCardState extends State<TextFieldCard> {
         ),
       ],
     ));
-  }
 }

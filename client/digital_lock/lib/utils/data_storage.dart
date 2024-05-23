@@ -12,7 +12,7 @@ class DataStorage extends ChangeNotifier {
     _loadprefs();
   }
 
-  setPhoneNumber(String phoneNumber) {
+  void setPhoneNumber(String phoneNumber) {
     _phoneNumber = phoneNumber;
     _saveprefs();
     notifyListeners();
@@ -24,12 +24,12 @@ class DataStorage extends ChangeNotifier {
 
   _loadprefs() async {
     await _initprefs();
-    _phoneNumber = _prefs?.getString(phoneNumberKey) ?? "";
+    _phoneNumber = _prefs?.getString(phoneNumberKey) ?? '';
     notifyListeners();
   }
 
   _saveprefs() async {
     await _initprefs();
-    _prefs?.setString(phoneNumberKey, _phoneNumber);
+    await _prefs?.setString(phoneNumberKey, _phoneNumber);
   }
 }

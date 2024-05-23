@@ -31,7 +31,7 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SwitchCard(
-                text: "Enable Dark Mode",
+                text: 'Enable Dark Mode',
                 value: appTheme.darktheme,
                 onChanged: (value) {
                   setState(() {

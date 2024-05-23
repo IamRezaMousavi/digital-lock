@@ -26,15 +26,14 @@ class _PhoneNumberInputState extends State<PhoneNumberInput> {
     }
   }
 
-  checkIsValid(String value) {
+  void checkIsValid(String value) {
     isValid = exp.hasMatch(value);
     setState(() {});
     widget.onStateChanged(isValid, widget.phoneController.text);
   }
 
   @override
-  Widget build(BuildContext context) {
-    return TextField(
+  Widget build(BuildContext context) => TextField(
       controller: widget.phoneController,
       decoration: InputDecoration(
         border: const OutlineInputBorder(),
@@ -45,5 +44,4 @@ class _PhoneNumberInputState extends State<PhoneNumberInput> {
         checkIsValid(value);
       },
     );
-  }
 }

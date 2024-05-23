@@ -32,12 +32,12 @@ class SmsCard extends StatefulWidget {
 class _SmsCardState extends State<SmsCard> {
   @override
   Widget build(BuildContext context) {
-    String title = "";
+    var title = '';
     if (widget.message.text != null) {
       try {
-        MessageText messageText =
+        final messageText =
             MessageText.fromMap(jsonDecode(widget.message.text!));
-        title = "${messageText.name} (${messageText.code})";
+        title = '${messageText.name} (${messageText.code})';
       } catch (e) {
         // Json Decode can't parse message text
         title = widget.message.text!;
@@ -46,17 +46,17 @@ class _SmsCardState extends State<SmsCard> {
 
     if (widget.message.date != null) {
       // convert timestamp to human readable
-      String dateTime = DateFormat('yyyy-MM-dd HH:mm')
+      final dateTime = DateFormat('yyyy-MM-dd HH:mm')
           .format(DateTime.fromMillisecondsSinceEpoch(widget.message.date!));
       title += ' $dateTime';
     }
 
     return Card(
       child: ListTile(
-          title: title.isNotEmpty ? Text(title) : const Text("Null"),
+          title: title.isNotEmpty ? Text(title) : const Text('Null'),
           subtitle: widget.message.address != null
               ? Text(widget.message.address!)
-              : const Text("Null"),
+              : const Text('Null'),
           trailing: OutlinedButton(
               onPressed: widget.onSend, child: const Text('Show')),
           onTap: widget.onSelect,
