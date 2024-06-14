@@ -1,0 +1,26 @@
+name: Build
+
+on: [push, pull_request]
+
+jobs:
+  build-arm:
+    runs-on: ubuntu-latest
+    container: archlinux:latest
+
+    steps:
+    - name: Install Deps
+      run: |
+        pacman -Syu \
+        arm-none-eabi-gcc arm-none-eabi-newlib arm-none-eabi-binutils \
+        make \
+        git --noconfirm
+
+    - uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
+    - name: Check
+      run: arm-none-eabi-gcc --version
+
+    - name: Build
+      run: cd stm32code/digital-lock && make GIT_SUBMODULES=true

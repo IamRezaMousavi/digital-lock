@@ -62,6 +62,3 @@ Middlewares/
 
 # output of project
 build/
-
-# ---> My Project
-local_config.h

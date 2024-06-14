@@ -32,7 +32,6 @@
 #include "ee24.h"
 #include "gsm.h"
 #include "lcd.h"
-#include "local_config.h"
 #include "modes.h"
 #include "sha-256.h"
 #include "usart.h"
@@ -76,6 +75,7 @@ Lcd_HandleTypeDef  lcd;
 EE24_HandleTypeDef ee24;
 Mode               activeMode             = NORMAL;
 uint8_t            ee24_data[EEPROM_SIZE] = {0};
+char               phoneNumber[]          = "099****8679";
 char               welcomeMessage[8]      = "WELCOME";
 char               errorMessage[8]        = "ERROR";
 char               password[SIZE_OF_SHA_256_HASH_STRING]
@@ -84,12 +84,6 @@ char    passwordtemp[16] = {0};
 uint8_t passwordIndex    = 0;
 uint8_t relayDelay       = 5;
 uint8_t userLastId       = 1;
-
-#ifdef PHONENUMBER
-char phoneNumber[] = PHONENUMBER;
-#else
-char phoneNumber[] = "099****8679";
-#endif
 
 /* USER CODE END Variables */
 /* Definitions for counterTask */
