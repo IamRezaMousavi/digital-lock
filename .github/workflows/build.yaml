@@ -24,3 +24,33 @@ jobs:
 
     - name: Build
       run: cd stm32code/digital-lock && make GIT_SUBMODULES=true
+  
+  build-flutter:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup Java
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+        cache: 'gradle'
+
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        channel: stable
+
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v3
+
+    - name: Check
+      run: flutter doctor
+    
+    - name: Get Deps
+      run: cd client/digital_lock && flutter pub get
+    
+    - name: Build
+      run: cd client/digital_lock && flutter build apk --debug -v
