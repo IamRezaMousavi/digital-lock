@@ -4,8 +4,8 @@ A **Digital Lock** with fingerprint and sms module and has android client to int
 
 ## Getting Started
 
-* For hardware code see [stm32code](./stm32code/digital-lock/)
-* For Android client see [client](./client/digital_lock/)
+* For hardware code see [stm32code](./stm32code/digital-lock/README.md)
+* For Android client see [client](./client/digital_lock/README.md)
 
 ## Mind Map of this project
 
