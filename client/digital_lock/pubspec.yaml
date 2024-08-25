@@ -41,8 +41,8 @@ dependencies:
     git:
       url: https://github.com/suhardik/s_telephony.git
       ref: develop
-  vibration: ^1.9.0
-  shared_preferences: ^2.2.2
+  vibration: ^2.0.0
+  shared_preferences: ^2.3.2
   provider: ^6.1.1
   flutter_svg: ^2.0.9
   fluttertoast: ^8.2.4
