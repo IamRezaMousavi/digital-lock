@@ -24,7 +24,7 @@ BraceWrapping:
   SplitEmptyNamespace: false
 BreakAfterJavaFieldAnnotations: true
 BreakBeforeBinaryOperators: All
-ColumnLimit:     100
+ColumnLimit:     120
 IndentCaseBlocks: true
 IndentCaseLabels: true
 IndentExternBlock: NoIndent

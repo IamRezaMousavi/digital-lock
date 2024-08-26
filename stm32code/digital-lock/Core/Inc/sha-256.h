@@ -111,9 +111,7 @@ void sha_256_write(struct Sha_256 *sha_256, const void *data, size_t len);
  */
 uint8_t *sha_256_close(struct Sha_256 *sha_256);
 
-void hash_to_string(
-    char string[SIZE_OF_SHA_256_HASH_STRING], const uint8_t hash[SIZE_OF_SHA_256_HASH]
-);
+void hash_to_string(char string[SIZE_OF_SHA_256_HASH_STRING], const uint8_t hash[SIZE_OF_SHA_256_HASH]);
 
 int hash_check(const char input[], const char output[]);
 

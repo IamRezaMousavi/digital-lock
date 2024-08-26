@@ -50,15 +50,14 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define LCD_BK_ON      HAL_GPIO_WritePin(LCDBK_GPIO_Port, LCDBK_Pin, GPIO_PIN_SET)
-#define LCD_BK_OFF     HAL_GPIO_WritePin(LCDBK_GPIO_Port, LCDBK_Pin, GPIO_PIN_RESET)
-#define RELAY_ON       HAL_GPIO_WritePin(RELAY_GPIO_Port, RELAY_Pin, GPIO_PIN_SET)
-#define RELAY_OFF      HAL_GPIO_WritePin(RELAY_GPIO_Port, RELAY_Pin, GPIO_PIN_RESET)
-#define BUZZER_ON      HAL_GPIO_WritePin(BUZZER_GPIO_Port, BUZZER_Pin, GPIO_PIN_SET)
-#define BUZZER_OFF     HAL_GPIO_WritePin(BUZZER_GPIO_Port, BUZZER_Pin, GPIO_PIN_RESET)
-#define FINGERPRINT_ON HAL_GPIO_WritePin(FINGERPRINT_EN_GPIO_Port, FINGERPRINT_EN_Pin, GPIO_PIN_SET)
-#define FINGERPRINT_OFF \
-  HAL_GPIO_WritePin(FINGERPRINT_EN_GPIO_Port, FINGERPRINT_EN_Pin, GPIO_PIN_RESET)
+#define LCD_BK_ON       HAL_GPIO_WritePin(LCDBK_GPIO_Port, LCDBK_Pin, GPIO_PIN_SET)
+#define LCD_BK_OFF      HAL_GPIO_WritePin(LCDBK_GPIO_Port, LCDBK_Pin, GPIO_PIN_RESET)
+#define RELAY_ON        HAL_GPIO_WritePin(RELAY_GPIO_Port, RELAY_Pin, GPIO_PIN_SET)
+#define RELAY_OFF       HAL_GPIO_WritePin(RELAY_GPIO_Port, RELAY_Pin, GPIO_PIN_RESET)
+#define BUZZER_ON       HAL_GPIO_WritePin(BUZZER_GPIO_Port, BUZZER_Pin, GPIO_PIN_SET)
+#define BUZZER_OFF      HAL_GPIO_WritePin(BUZZER_GPIO_Port, BUZZER_Pin, GPIO_PIN_RESET)
+#define FINGERPRINT_ON  HAL_GPIO_WritePin(FINGERPRINT_EN_GPIO_Port, FINGERPRINT_EN_Pin, GPIO_PIN_SET)
+#define FINGERPRINT_OFF HAL_GPIO_WritePin(FINGERPRINT_EN_GPIO_Port, FINGERPRINT_EN_Pin, GPIO_PIN_RESET)
 
 #define EEPROM_SIZE 32
 
@@ -505,7 +504,7 @@ void StartCounterTask(void *argument) {
   LCD_BK_ON;
   Lcd_PortType ports[] = {D4_GPIO_Port, D5_GPIO_Port, D6_GPIO_Port, D7_GPIO_Port};
   Lcd_PinType  pins[]  = {D4_Pin, D5_Pin, D6_Pin, D7_Pin};
-  lcd = Lcd_create(ports, pins, RS_GPIO_Port, RS_Pin, EN_GPIO_Port, EN_Pin, LCD_4_BIT_MODE);
+  lcd                  = Lcd_create(ports, pins, RS_GPIO_Port, RS_Pin, EN_GPIO_Port, EN_Pin, LCD_4_BIT_MODE);
 
   /* Infinite loop */
   uint16_t i = 0;

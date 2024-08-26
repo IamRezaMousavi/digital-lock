@@ -7,8 +7,7 @@
   #define FINGERPRINT_PACKETRECIEVEERR 0x01 // Error when receiving data package
   #define FINGERPRINT_NOFINGER         0x02 // No finger on the sensor (can't detect finger)
   #define FINGERPRINT_IMAGEFAIL        0x03 // Failed to collect finger
-  #define FINGERPRINT_IMAGEMESS \
-    0x06 // Failed to generate character file due to the over-disorderly fingerprint image
+  #define FINGERPRINT_IMAGEMESS        0x06 // Failed to generate character file due to the over-disorderly fingerprint image
   #define FINGERPRINT_FEATUREFAIL \
     0x07 // Failed to generate character file due to lackness of character point or over-smallness
          // of fingerprint image

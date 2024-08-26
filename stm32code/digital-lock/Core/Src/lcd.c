@@ -23,8 +23,8 @@ static void lcd_write(Lcd_HandleTypeDef *lcd, uint8_t data, uint8_t len);
  * Create new Lcd_HandleTypeDef and initialize the Lcd
  */
 Lcd_HandleTypeDef Lcd_create(
-    Lcd_PortType port[], Lcd_PinType pin[], Lcd_PortType rs_port, Lcd_PinType rs_pin,
-    Lcd_PortType en_port, Lcd_PinType en_pin, Lcd_ModeTypeDef mode
+    Lcd_PortType port[], Lcd_PinType pin[], Lcd_PortType rs_port, Lcd_PinType rs_pin, Lcd_PortType en_port,
+    Lcd_PinType en_pin, Lcd_ModeTypeDef mode
 ) {
   Lcd_HandleTypeDef lcd;
 
