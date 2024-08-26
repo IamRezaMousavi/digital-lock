@@ -1,0 +1,15 @@
+name: aes
+description: Dart encryption library for encrypting/decrypting files, plain text and binary data with AES Algorithm.
+version: 1.0.0
+repository: https://github.com/IamRezaMousavi/digital-lock
+
+environment:
+  sdk: ^3.5.1
+
+# Add regular dependencies here.
+dependencies:
+  # path: ^1.8.0
+
+dev_dependencies:
+  lints: ^4.0.0
+  test: ^1.24.0

@@ -85,7 +85,8 @@ ${SUBMODULES_PATH}Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/p
 Core/Src/i2c.c \
 Core/Src/ds1307_for_stm32_hal.c \
 Core/Src/ee24.c \
-Core/Src/sha-256.c
+Core/Src/sha-256.c \
+Core/Src/aes.c
 
 # ASM sources
 ASM_SOURCES =  \

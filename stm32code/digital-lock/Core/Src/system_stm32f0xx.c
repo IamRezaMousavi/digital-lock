@@ -210,9 +210,9 @@ void SystemCoreClockUpdate(void) {
 #endif /* STM32F042x6 || STM32F048xx || STM32F071xB || STM32F072xB || STM32F078xx || STM32F091xC \
           || STM32F098xx */
       else {
-#if defined(STM32F042x6) || defined(STM32F048xx) || defined(STM32F070x6) || defined(STM32F078xx) \
-    || defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F070xB)                      \
-    || defined(STM32F091xC) || defined(STM32F098xx) || defined(STM32F030xC)
+#if defined(STM32F042x6) || defined(STM32F048xx) || defined(STM32F070x6) || defined(STM32F078xx)    \
+    || defined(STM32F071xB) || defined(STM32F072xB) || defined(STM32F070xB) || defined(STM32F091xC) \
+    || defined(STM32F098xx) || defined(STM32F030xC)
         /* HSI used as PLL clock source : SystemCoreClock = HSI/PREDIV * PLLMUL */
         SystemCoreClock = (HSI_VALUE / predivfactor) * pllmull;
 #else

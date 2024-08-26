@@ -81,8 +81,8 @@ void              Lcd_int(Lcd_HandleTypeDef *lcd, int number);
 void              Lcd_string(Lcd_HandleTypeDef *lcd, char *string);
 void              Lcd_cursor(Lcd_HandleTypeDef *lcd, uint8_t row, uint8_t col);
 Lcd_HandleTypeDef Lcd_create(
-    Lcd_PortType port[], Lcd_PinType pin[], Lcd_PortType rs_port, Lcd_PinType rs_pin,
-    Lcd_PortType en_port, Lcd_PinType en_pin, Lcd_ModeTypeDef mode
+    Lcd_PortType port[], Lcd_PinType pin[], Lcd_PortType rs_port, Lcd_PinType rs_pin, Lcd_PortType en_port,
+    Lcd_PinType en_pin, Lcd_ModeTypeDef mode
 );
 void Lcd_define_char(Lcd_HandleTypeDef *lcd, uint8_t code, uint8_t bitmap[]);
 void Lcd_clear(Lcd_HandleTypeDef *lcd);

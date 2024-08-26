@@ -27,8 +27,7 @@
 extern "C" {
 #endif
 
-#if !defined(__WINDOWS__) \
-    && (defined(WIN32) || defined(WIN64) || defined(_MSC_VER) || defined(_WIN32))
+#if !defined(__WINDOWS__) && (defined(WIN32) || defined(WIN64) || defined(_MSC_VER) || defined(_WIN32))
   #define __WINDOWS__
 #endif
 
@@ -59,8 +58,7 @@ extern "C" {
   #define CJSON_STDCALL __stdcall
 
   /* export symbols by default, this is necessary for copy pasting the C and header file */
-  #if !defined(CJSON_HIDE_SYMBOLS) && !defined(CJSON_IMPORT_SYMBOLS) \
-      && !defined(CJSON_EXPORT_SYMBOLS)
+  #if !defined(CJSON_HIDE_SYMBOLS) && !defined(CJSON_IMPORT_SYMBOLS) && !defined(CJSON_EXPORT_SYMBOLS)
     #define CJSON_EXPORT_SYMBOLS
   #endif
 
@@ -75,8 +73,7 @@ extern "C" {
   #define CJSON_CDECL
   #define CJSON_STDCALL
 
-  #if (defined(__GNUC__) || defined(__SUNPRO_CC) || defined(__SUNPRO_C)) \
-      && defined(CJSON_API_VISIBILITY)
+  #if (defined(__GNUC__) || defined(__SUNPRO_CC) || defined(__SUNPRO_C)) && defined(CJSON_API_VISIBILITY)
     #define CJSON_PUBLIC(type) __attribute__((visibility("default"))) type
   #else
     #define CJSON_PUBLIC(type) type
@@ -162,13 +159,10 @@ CJSON_PUBLIC(cJSON *) cJSON_ParseWithLength(const char *value, size_t buffer_len
 /* If you supply a ptr in return_parse_end and parsing fails, then return_parse_end will contain a
  * pointer to the error so will match cJSON_GetErrorPtr(). */
 CJSON_PUBLIC(cJSON *)
-cJSON_ParseWithOpts(
-    const char *value, const char **return_parse_end, cJSON_bool require_null_terminated
-);
+cJSON_ParseWithOpts(const char *value, const char **return_parse_end, cJSON_bool require_null_terminated);
 CJSON_PUBLIC(cJSON *)
 cJSON_ParseWithLengthOpts(
-    const char *value, size_t buffer_length, const char **return_parse_end,
-    cJSON_bool require_null_terminated
+    const char *value, size_t buffer_length, const char **return_parse_end, cJSON_bool require_null_terminated
 );
 
 /* Render a cJSON entity to text for transfer/storage. */
@@ -269,9 +263,7 @@ CJSON_PUBLIC(void) cJSON_DeleteItemFromObjectCaseSensitive(cJSON *object, const 
 
 /* Update array items. */
 CJSON_PUBLIC(cJSON_bool)
-cJSON_InsertItemInArray(
-    cJSON *array, int which, cJSON *newitem
-); /* Shifts pre-existing items to the right. */
+cJSON_InsertItemInArray(cJSON *array, int which, cJSON *newitem); /* Shifts pre-existing items to the right. */
 CJSON_PUBLIC(cJSON_bool)
 cJSON_ReplaceItemViaPointer(cJSON *const parent, cJSON *const item, cJSON *replacement);
 CJSON_PUBLIC(cJSON_bool) cJSON_ReplaceItemInArray(cJSON *array, int which, cJSON *newitem);
@@ -313,8 +305,7 @@ CJSON_PUBLIC(cJSON *) cJSON_AddObjectToObject(cJSON *const object, const char *c
 CJSON_PUBLIC(cJSON *) cJSON_AddArrayToObject(cJSON *const object, const char *const name);
 
 /* When assigning an integer value, it needs to be propagated to valuedouble too. */
-#define cJSON_SetIntValue(object, number) \
-  ((object) ? (object)->valueint = (object)->valuedouble = (number) : (number))
+#define cJSON_SetIntValue(object, number) ((object) ? (object)->valueint = (object)->valuedouble = (number) : (number))
 /* helper for the cJSON_SetNumberValue macro */
 CJSON_PUBLIC(double) cJSON_SetNumberHelper(cJSON *object, double number);
 #define cJSON_SetNumberValue(object, number) \
@@ -325,10 +316,9 @@ CJSON_PUBLIC(char *) cJSON_SetValuestring(cJSON *object, const char *valuestring
 
 /* If the object is not a boolean type this does nothing and returns cJSON_Invalid else it returns
  * the new type*/
-#define cJSON_SetBoolValue(object, boolValue)                              \
-  ((object != NULL && ((object)->type & (cJSON_False | cJSON_True)))       \
-       ? (object)->type = ((object)->type & (~(cJSON_False | cJSON_True))) \
-                          | ((boolValue) ? cJSON_True : cJSON_False)       \
+#define cJSON_SetBoolValue(object, boolValue)                                                                         \
+  ((object != NULL && ((object)->type & (cJSON_False | cJSON_True)))                                                  \
+       ? (object)->type = ((object)->type & (~(cJSON_False | cJSON_True))) | ((boolValue) ? cJSON_True : cJSON_False) \
        : cJSON_Invalid)
 
 /* Macro for iterating over an array or object */
