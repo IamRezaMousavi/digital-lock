@@ -14,3 +14,13 @@ updates:
         patterns:
           - "*"
     open-pull-requests-limit: 5
+
+  - package-ecosystem: "gradle"
+    directory: "/client/digital_lock/android"
+    schedule:
+      interval: "weekly"
+    groups:
+      gradle-dependencies:
+        patterns:
+          - "*"
+    open-pull-requests-limit: 5
