@@ -40,9 +40,9 @@ dependencies:
   vibration: ^2.0.1
   shared_preferences: ^2.3.3
   provider: ^6.1.1
-  flutter_svg: ^2.0.14
+  flutter_svg: ^2.0.16
   fluttertoast: ^8.2.4
-  intl: ^0.19.0
+  intl: ^0.20.1
   path: ^1.9.0
 
   aes:
