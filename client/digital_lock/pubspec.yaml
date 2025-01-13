@@ -38,11 +38,11 @@ dependencies:
       url: https://github.com/suhardik/s_telephony.git
       ref: develop
   vibration: ^2.0.1
-  shared_preferences: ^2.3.3
+  shared_preferences: ^2.3.5
   provider: ^6.1.1
-  flutter_svg: ^2.0.14
-  fluttertoast: ^8.2.4
-  intl: ^0.19.0
+  flutter_svg: ^2.0.17
+  fluttertoast: ^8.2.10
+  intl: ^0.20.1
   path: ^1.9.0
 
   aes:
@@ -59,7 +59,7 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^5.0.0
 
-  flutter_launcher_icons: ^0.14.1
+  flutter_launcher_icons: ^0.14.2
 
 flutter_launcher_icons:
   android: "launcher_icon"
