@@ -1,3 +1,12 @@
 [submodule "stm32code/digital-lock/STM32CubeF0"]
 	path = stm32code/digital-lock/STM32CubeF0
 	url = https://github.com/STMicroelectronics/STM32CubeF0.git
+[submodule "stm32code/digital-lock/cJSON"]
+	path = stm32code/digital-lock/cJSON
+	url = https://github.com/DaveGamble/cJSON.git
+[submodule "stm32code/digital-lock/sha-2"]
+	path = stm32code/digital-lock/sha-2
+	url = https://github.com/amosnier/sha-2.git
+[submodule "stm32code/digital-lock/tiny-aes-c"]
+	path = stm32code/digital-lock/tiny-aes-c
+	url = https://github.com/kokke/tiny-AES-c.git

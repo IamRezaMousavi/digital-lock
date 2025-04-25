@@ -30,13 +30,13 @@ extern "C" {
 #include <stdbool.h>
 
 #if EE24_CMSIS_RTOS == EE24_CMSIS_RTOS_DISABLE
-  #define EE24_Delay(x) HAL_Delay(x)
+#define EE24_Delay(x) HAL_Delay(x)
 #elif EE24_CMSIS_RTOS == EE24_CMSIS_RTOS_V1
-  #include "cmsis_os.h"
-  #define EE24_Delay(x) osDelay(x)
+#include "cmsis_os.h"
+#define EE24_Delay(x) osDelay(x)
 #else
-  #include "cmsis_os2.h"
-  #define EE24_Delay(x) osDelay(x)
+#include "cmsis_os2.h"
+#define EE24_Delay(x) osDelay(x)
 #endif
 
 #define EE24_ADDRESS_DEFAULT 0xA0
@@ -46,9 +46,9 @@ extern "C" {
 /***********************************************************************************************************/
 
 typedef struct {
-  I2C_HandleTypeDef *HI2c;
-  uint8_t            Address;
-  uint8_t            Lock;
+    I2C_HandleTypeDef *HI2c;
+    uint8_t            Address;
+    uint8_t            Lock;
 
 } EE24_HandleTypeDef;
 

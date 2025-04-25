@@ -20,9 +20,9 @@
 */
 
 typedef struct {
-  uint8_t  ColumnSize;
-  uint8_t  RowSize;
-  uint16_t LastKey;
+    uint8_t  ColumnSize;
+    uint8_t  RowSize;
+    uint16_t LastKey;
 
 } KeyPad_t;
 

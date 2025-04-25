@@ -57,21 +57,21 @@ extern const uint8_t ROW_20[];
 #define Lcd_PinType  uint16_t
 
 typedef enum {
-  LCD_4_BIT_MODE,
-  LCD_8_BIT_MODE
+    LCD_4_BIT_MODE,
+    LCD_8_BIT_MODE
 } Lcd_ModeTypeDef;
 
 typedef struct {
-  Lcd_PortType *data_port;
-  Lcd_PinType  *data_pin;
+    Lcd_PortType *data_port;
+    Lcd_PinType  *data_pin;
 
-  Lcd_PortType rs_port;
-  Lcd_PinType  rs_pin;
+    Lcd_PortType rs_port;
+    Lcd_PinType  rs_pin;
 
-  Lcd_PortType en_port;
-  Lcd_PinType  en_pin;
+    Lcd_PortType en_port;
+    Lcd_PinType  en_pin;
 
-  Lcd_ModeTypeDef mode;
+    Lcd_ModeTypeDef mode;
 
 } Lcd_HandleTypeDef;
 

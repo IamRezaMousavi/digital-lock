@@ -22,15 +22,15 @@
 extern I2C_HandleTypeDef *_ds1307_ui2c;
 
 typedef enum DS1307_Rate {
-  DS1307_1HZ,
-  DS1307_4096HZ,
-  DS1307_8192HZ,
-  DS1307_32768HZ
+    DS1307_1HZ,
+    DS1307_4096HZ,
+    DS1307_8192HZ,
+    DS1307_32768HZ
 } DS1307_Rate;
 
 typedef enum DS1307_SquareWaveEnable {
-  DS1307_DISABLED,
-  DS1307_ENABLED
+    DS1307_DISABLED,
+    DS1307_ENABLED
 } DS1307_SquareWaveEnable;
 
 void DS1307_Init(I2C_HandleTypeDef *hi2c);
