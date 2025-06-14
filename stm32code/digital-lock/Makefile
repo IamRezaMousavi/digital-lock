@@ -32,10 +32,14 @@ OPT = -Og
 BUILD_DIR = build
 
 ifdef GIT_SUBMODULES
-SUBMODULES_PATH = STM32CubeF0/
+STM32_PATH = STM32CubeF0/
 else
-SUBMODULES_PATH = 
+STM32_PATH = 
 endif
+
+CJSON_PATH = cJSON
+SHA2_PATH = sha-2
+TINY_AES_PATH = tiny-aes-c
 
 ######################################
 # source
@@ -48,45 +52,45 @@ Core/Src/KeyPad.c \
 Core/Src/gsm.c \
 Core/Src/Fingerprint.c \
 Core/Src/gpio.c \
-Core/Src/cJSON.c \
 Core/Src/stm32f0xx_it.c \
 Core/Src/stm32f0xx_hal_msp.c \
-${SUBMODULES_PATH}Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_tim.c \
-${SUBMODULES_PATH}Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_tim_ex.c \
-${SUBMODULES_PATH}Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc.c \
-${SUBMODULES_PATH}Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c \
-${SUBMODULES_PATH}Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal.c \
-${SUBMODULES_PATH}Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_i2c.c \
-${SUBMODULES_PATH}Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_i2c_ex.c \
-${SUBMODULES_PATH}Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_gpio.c \
-${SUBMODULES_PATH}Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_dma.c \
-${SUBMODULES_PATH}Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_cortex.c \
-${SUBMODULES_PATH}Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_pwr.c \
-${SUBMODULES_PATH}Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_pwr_ex.c \
-${SUBMODULES_PATH}Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_flash.c \
-${SUBMODULES_PATH}Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_flash_ex.c \
-${SUBMODULES_PATH}Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_exti.c \
 Core/Src/system_stm32f0xx.c \
 Core/Src/usart.c \
-${SUBMODULES_PATH}Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_uart.c \
-${SUBMODULES_PATH}Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_uart_ex.c \
 Core/Src/freertos.c \
 Core/Src/stm32f0xx_hal_timebase_tim.c \
-${SUBMODULES_PATH}Middlewares/Third_Party/FreeRTOS/Source/croutine.c \
-${SUBMODULES_PATH}Middlewares/Third_Party/FreeRTOS/Source/event_groups.c \
-${SUBMODULES_PATH}Middlewares/Third_Party/FreeRTOS/Source/list.c \
-${SUBMODULES_PATH}Middlewares/Third_Party/FreeRTOS/Source/queue.c \
-${SUBMODULES_PATH}Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c \
-${SUBMODULES_PATH}Middlewares/Third_Party/FreeRTOS/Source/tasks.c \
-${SUBMODULES_PATH}Middlewares/Third_Party/FreeRTOS/Source/timers.c \
-${SUBMODULES_PATH}Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c \
-${SUBMODULES_PATH}Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c \
-${SUBMODULES_PATH}Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/port.c \
+${STM32_PATH}Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_tim.c \
+${STM32_PATH}Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_tim_ex.c \
+${STM32_PATH}Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc.c \
+${STM32_PATH}Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c \
+${STM32_PATH}Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal.c \
+${STM32_PATH}Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_i2c.c \
+${STM32_PATH}Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_i2c_ex.c \
+${STM32_PATH}Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_gpio.c \
+${STM32_PATH}Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_dma.c \
+${STM32_PATH}Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_cortex.c \
+${STM32_PATH}Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_pwr.c \
+${STM32_PATH}Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_pwr_ex.c \
+${STM32_PATH}Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_flash.c \
+${STM32_PATH}Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_flash_ex.c \
+${STM32_PATH}Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_exti.c \
+${STM32_PATH}Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_uart.c \
+${STM32_PATH}Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_uart_ex.c \
+${STM32_PATH}Middlewares/Third_Party/FreeRTOS/Source/croutine.c \
+${STM32_PATH}Middlewares/Third_Party/FreeRTOS/Source/event_groups.c \
+${STM32_PATH}Middlewares/Third_Party/FreeRTOS/Source/list.c \
+${STM32_PATH}Middlewares/Third_Party/FreeRTOS/Source/queue.c \
+${STM32_PATH}Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c \
+${STM32_PATH}Middlewares/Third_Party/FreeRTOS/Source/tasks.c \
+${STM32_PATH}Middlewares/Third_Party/FreeRTOS/Source/timers.c \
+${STM32_PATH}Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c \
+${STM32_PATH}Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c \
+${STM32_PATH}Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/port.c \
 Core/Src/i2c.c \
 Core/Src/ds1307_for_stm32_hal.c \
 Core/Src/ee24.c \
-Core/Src/sha-256.c \
-Core/Src/aes.c
+${CJSON_PATH}/cJSON.c \
+${SHA2_PATH}/sha-256.c \
+${TINY_AES_PATH}/aes.c
 
 # ASM sources
 ASM_SOURCES =  \
@@ -145,13 +149,16 @@ AS_INCLUDES =
 # C includes
 C_INCLUDES =  \
 -ICore/Inc \
--I${SUBMODULES_PATH}Drivers/STM32F0xx_HAL_Driver/Inc \
--I${SUBMODULES_PATH}Drivers/STM32F0xx_HAL_Driver/Inc/Legacy \
--I${SUBMODULES_PATH}Drivers/CMSIS/Device/ST/STM32F0xx/Include \
--I${SUBMODULES_PATH}Drivers/CMSIS/Include \
--I${SUBMODULES_PATH}Middlewares/Third_Party/FreeRTOS/Source/include \
--I${SUBMODULES_PATH}Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 \
--I${SUBMODULES_PATH}Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0
+-I${STM32_PATH}Drivers/STM32F0xx_HAL_Driver/Inc \
+-I${STM32_PATH}Drivers/STM32F0xx_HAL_Driver/Inc/Legacy \
+-I${STM32_PATH}Drivers/CMSIS/Device/ST/STM32F0xx/Include \
+-I${STM32_PATH}Drivers/CMSIS/Include \
+-I${STM32_PATH}Middlewares/Third_Party/FreeRTOS/Source/include \
+-I${STM32_PATH}Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 \
+-I${STM32_PATH}Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0 \
+-I${CJSON_PATH} \
+-I${SHA2_PATH} \
+-I${TINY_AES_PATH}
 
 
 # compile gcc flags

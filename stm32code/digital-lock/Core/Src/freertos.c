@@ -59,7 +59,8 @@
 #define FINGERPRINT_ON  HAL_GPIO_WritePin(FINGERPRINT_EN_GPIO_Port, FINGERPRINT_EN_Pin, GPIO_PIN_SET)
 #define FINGERPRINT_OFF HAL_GPIO_WritePin(FINGERPRINT_EN_GPIO_Port, FINGERPRINT_EN_Pin, GPIO_PIN_RESET)
 
-#define EEPROM_SIZE 32
+#define SIZE_OF_SHA_256_HASH_STRING 65
+#define EEPROM_SIZE                 32
 
 /* USER CODE END PD */
 
@@ -157,6 +158,19 @@ void openLock() {
   RELAY_ON;
   osDelay(relayDelay * 1000);
   RELAY_OFF;
+}
+
+void hash_to_string(char string[SIZE_OF_SHA_256_HASH_STRING], const uint8_t hash[SIZE_OF_SHA_256_HASH]) {
+  for (size_t i = 0; i < SIZE_OF_SHA_256_HASH; i++)
+    string += sprintf(string, "%02x", hash[i]);
+}
+
+int hash_check(const char input[], const char output[]) {
+  uint8_t hash[SIZE_OF_SHA_256_HASH];
+  char    hash_string[SIZE_OF_SHA_256_HASH_STRING];
+  calc_sha_256(hash, input, strlen(input));
+  hash_to_string(hash_string, hash);
+  return strcmp(output, hash_string) == 0;
 }
 
 void checkPasswordAndOpen() {

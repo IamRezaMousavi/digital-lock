@@ -6,30 +6,36 @@ A software that run on digital lock hardware.
 
 ### Getting Started
 
-You need to install
+1. You need to install
 
-* [Arm Gnu Toolchain](https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads)
-* [OpenOCD](https://openocd.org/pages/getting-openocd.html)
-* [Gnu Make](https://www.gnu.org/software/make/)
+    * [Arm Gnu Toolchain](https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads)
+    * [OpenOCD](https://openocd.org/pages/getting-openocd.html)
+    * [Gnu Make](https://www.gnu.org/software/make/)
 
-For Build the project, you must run:
+2. To fetch submodules, run:
 
-```bash
-make
-```
+    ```sh
+    git submodule update --init --recursive
+    ```
 
-For Upload code to hardware, you must to connect the programmer to laptop and run:
+3. To Build the project, you must run:
 
-```bash
-make flush
-```
+    ```sh
+    make
+    ```
+
+4. To Upload code to hardware, you must to connect the programmer to laptop and run:
+
+    ```sh
+    make flush
+    ```
 
 ### Format The Code
 
 You need to have `clang-format` in PATH
 Then run:
 
-```bash
+```sh
 make format
 ```
 
