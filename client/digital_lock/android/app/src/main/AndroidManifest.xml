@@ -35,7 +35,7 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
-        
+
         <receiver
             android:name="com.shounakmulay.telephony.sms.IncomingSmsReceiver"
             android:permission="android.permission.BROADCAST_SMS"

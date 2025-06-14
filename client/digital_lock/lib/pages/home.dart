@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:telephony/telephony.dart';
+import 'package:another_telephony/telephony.dart';
 import 'package:provider/provider.dart';
 
 import '../utils/data_storage.dart';
