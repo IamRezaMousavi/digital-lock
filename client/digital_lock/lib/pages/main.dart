@@ -21,11 +21,7 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   int _currentIndex = 0;
 
-  final List<Widget> _children = const [
-    HomePage(),
-    UserPage(),
-    SettingsPage(),
-  ];
+  final List<Widget> _children = const [HomePage(), UserPage(), SettingsPage()];
 
   @override
   void initState() {
@@ -36,52 +32,53 @@ class _MainPageState extends State<MainPage> {
       if (dataStorage.phoneNumber.isEmpty) {
         await showDialog<String>(
           context: context,
-          builder: (BuildContext context) => Dialog(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  const Text(
-                    'Phone Number is not set',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  const Text('Please enter the phone number:'),
-                  PhoneNumberInput(
-                    onStateChanged: (isValid, phoneNumber) {
-                      if (isValid) {
-                        dataStorage.setPhoneNumber(phoneNumber);
-                      }
-                    },
-                  ),
-                  const SizedBox(height: 15),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      TextButton(
-                        style: TextButton.styleFrom(
-                          foregroundColor: Colors.red,
-                        ),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: const Text('Close'),
+          builder:
+              (BuildContext context) => Dialog(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      const Text(
+                        'Phone Number is not set',
+                        style: TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      TextButton(
-                        onPressed: () {
-                          if (dataStorage.phoneNumber.isNotEmpty) {
-                            Navigator.pop(context);
+                      const Text('Please enter the phone number:'),
+                      PhoneNumberInput(
+                        onStateChanged: (isValid, phoneNumber) {
+                          if (isValid) {
+                            dataStorage.setPhoneNumber(phoneNumber);
                           }
                         },
-                        child: const Text('Set'),
+                      ),
+                      const SizedBox(height: 15),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          TextButton(
+                            style: TextButton.styleFrom(
+                              foregroundColor: Colors.red,
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: const Text('Close'),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              if (dataStorage.phoneNumber.isNotEmpty) {
+                                Navigator.pop(context);
+                              }
+                            },
+                            child: const Text('Set'),
+                          ),
+                        ],
                       ),
                     ],
-                  )
-                ],
+                  ),
+                ),
               ),
-            ),
-          ),
         );
       }
     });

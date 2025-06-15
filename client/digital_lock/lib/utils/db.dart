@@ -2,7 +2,6 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 
-
 import './models.dart';
 
 class MessagesDB {
@@ -15,11 +14,7 @@ class MessagesDB {
   Future<Database> _initDatabase() async {
     final documentsDir = await getApplicationDocumentsDirectory();
     final path = join(documentsDir.path, 'messages.db');
-    return openDatabase(
-      path,
-      version: 1,
-      onCreate: _onCreate,
-    );
+    return openDatabase(path, version: 1, onCreate: _onCreate);
   }
 
   Future _onCreate(Database db, int version) async {
@@ -37,9 +32,10 @@ class MessagesDB {
     final db = await instance.database;
     // reverse messages list
     final messages = await db.query('messages', orderBy: 'date DESC');
-    final messagesList = messages.isNotEmpty
-        ? messages.map((e) => Message.fromMap(e)).toList()
-        : <Message>[];
+    final messagesList =
+        messages.isNotEmpty
+            ? messages.map((e) => Message.fromMap(e)).toList()
+            : <Message>[];
     return messagesList;
   }
 
@@ -55,8 +51,12 @@ class MessagesDB {
 
   Future<int> update(Message message) async {
     final db = await instance.database;
-    return db.update('messages', message.toMap(),
-        where: 'id = ?', whereArgs: [message.id]);
+    return db.update(
+      'messages',
+      message.toMap(),
+      where: 'id = ?',
+      whereArgs: [message.id],
+    );
   }
 }
 
@@ -70,11 +70,7 @@ class UsersDB {
   Future<Database> _initDatabase() async {
     final documentsDir = await getApplicationDocumentsDirectory();
     final path = join(documentsDir.path, 'users.db');
-    return openDatabase(
-      path,
-      version: 1,
-      onCreate: _onCreate,
-    );
+    return openDatabase(path, version: 1, onCreate: _onCreate);
   }
 
   Future _onCreate(Database db, int version) async {
@@ -92,7 +88,9 @@ class UsersDB {
     // reverse list
     final users = await db.query('users', orderBy: 'date DESC');
     final usersList =
-        users.isNotEmpty ? users.map((e) => User.fromMap(e)).toList() : <User>[];
+        users.isNotEmpty
+            ? users.map((e) => User.fromMap(e)).toList()
+            : <User>[];
     return usersList;
   }
 
@@ -108,7 +106,11 @@ class UsersDB {
 
   Future<int> update(User user) async {
     final db = await instance.database;
-    return db
-        .update('users', user.toMap(), where: 'id = ?', whereArgs: [user.id]);
+    return db.update(
+      'users',
+      user.toMap(),
+      where: 'id = ?',
+      whereArgs: [user.id],
+    );
   }
 }

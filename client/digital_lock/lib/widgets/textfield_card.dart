@@ -28,7 +28,7 @@ class _TextFieldCardState extends State<TextFieldCard> {
 
   @override
   Widget build(BuildContext context) => Card(
-        child: Column(
+    child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Row(
@@ -57,5 +57,6 @@ class _TextFieldCardState extends State<TextFieldCard> {
           ),
         ),
       ],
-    ));
+    ),
+  );
 }

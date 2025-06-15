@@ -67,9 +67,10 @@ class SalomonBottomBar extends StatelessWidget {
         child: Row(
           /// Using a different alignment when there are 2 items or less
           /// so it behaves the same as BottomNavigationBar.
-          mainAxisAlignment: items.length <= 2
-              ? MainAxisAlignment.spaceEvenly
-              : MainAxisAlignment.spaceBetween,
+          mainAxisAlignment:
+              items.length <= 2
+                  ? MainAxisAlignment.spaceEvenly
+                  : MainAxisAlignment.spaceBetween,
           children: [
             for (final item in items)
               TweenAnimationBuilder<double>(
@@ -79,29 +80,35 @@ class SalomonBottomBar extends StatelessWidget {
                 curve: curve,
                 duration: duration,
                 builder: (context, t, _) {
-                  final selectedColor = item.selectedColor ??
+                  final selectedColor =
+                      item.selectedColor ??
                       selectedItemColor ??
                       theme.primaryColor;
 
-                  final unselectedColor = item.unselectedColor ??
+                  final unselectedColor =
+                      item.unselectedColor ??
                       unselectedItemColor ??
                       theme.iconTheme.color;
 
                   return Material(
                     color: Color.lerp(
-                        selectedColor.withOpacity(0.0),
-                        selectedColor.withOpacity(selectedColorOpacity ?? 0.1),
-                        t),
+                      selectedColor.withValues(alpha: 0.0),
+                      selectedColor.withValues(
+                        alpha: selectedColorOpacity ?? 0.1,
+                      ),
+                      t,
+                    ),
                     shape: itemShape,
                     child: InkWell(
                       onTap: () => onTap?.call(items.indexOf(item)),
                       customBorder: itemShape,
-                      focusColor: selectedColor.withOpacity(0.1),
-                      highlightColor: selectedColor.withOpacity(0.1),
-                      splashColor: selectedColor.withOpacity(0.1),
-                      hoverColor: selectedColor.withOpacity(0.1),
+                      focusColor: selectedColor.withValues(alpha: 0.1),
+                      highlightColor: selectedColor.withValues(alpha: 0.1),
+                      splashColor: selectedColor.withValues(alpha: 0.1),
+                      hoverColor: selectedColor.withValues(alpha: 0.1),
                       child: Padding(
-                        padding: itemPadding -
+                        padding:
+                            itemPadding -
                             (Directionality.of(context) == TextDirection.ltr
                                 ? EdgeInsets.only(right: itemPadding.right * t)
                                 : EdgeInsets.only(left: itemPadding.left * t)),
@@ -110,12 +117,16 @@ class SalomonBottomBar extends StatelessWidget {
                             IconTheme(
                               data: IconThemeData(
                                 color: Color.lerp(
-                                    unselectedColor, selectedColor, t),
+                                  unselectedColor,
+                                  selectedColor,
+                                  t,
+                                ),
                                 size: 24,
                               ),
-                              child: items.indexOf(item) == currentIndex
-                                  ? item.activeIcon ?? item.icon
-                                  : item.icon,
+                              child:
+                                  items.indexOf(item) == currentIndex
+                                      ? item.activeIcon ?? item.icon
+                                      : item.icon,
                             ),
                             ClipRect(
                               clipBehavior: Clip.antiAlias,
@@ -129,20 +140,24 @@ class SalomonBottomBar extends StatelessWidget {
                                   alignment: const Alignment(-0.2, 0.0),
                                   widthFactor: t,
                                   child: Padding(
-                                    padding: Directionality.of(context) ==
-                                            TextDirection.ltr
-                                        ? EdgeInsets.only(
-                                            left: itemPadding.left / 2,
-                                            right: itemPadding.right)
-                                        : EdgeInsets.only(
-                                            left: itemPadding.left,
-                                            right: itemPadding.right / 2),
+                                    padding:
+                                        Directionality.of(context) ==
+                                                TextDirection.ltr
+                                            ? EdgeInsets.only(
+                                              left: itemPadding.left / 2,
+                                              right: itemPadding.right,
+                                            )
+                                            : EdgeInsets.only(
+                                              left: itemPadding.left,
+                                              right: itemPadding.right / 2,
+                                            ),
                                     child: DefaultTextStyle(
                                       style: TextStyle(
                                         color: Color.lerp(
-                                            selectedColor.withOpacity(0.0),
-                                            selectedColor,
-                                            t),
+                                          selectedColor.withValues(alpha: 0.0),
+                                          selectedColor,
+                                          t,
+                                        ),
                                         fontWeight: FontWeight.w600,
                                       ),
                                       child: item.title,

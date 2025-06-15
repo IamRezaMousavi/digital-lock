@@ -1,11 +1,36 @@
-name: Build
+name: Nightly Build
 
-on: [push, pull_request]
+on:
+  workflow_dispatch: # To run the workflow manually if needed
+  schedule:
+    - cron: '0 0 * * *' # once a day
 
 jobs:
+  evaluateChanges:
+    name: Evaluate changes for run or skipping nightly build
+    runs-on: ubuntu-latest
+    outputs:
+      SHOULD_BUILD: ${{ steps.check.outputs.shouldBuild }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Check
+        id: check
+        run: |
+          if [[ $(git rev-list --after="24 hours" master client/) ]]; then
+            echo shouldBuild=true >> $GITHUB_OUTPUT
+          else
+            echo shouldBuild=false >> $GITHUB_OUTPUT
+          fi
+
   build-arm:
     runs-on: ubuntu-latest
     container: archlinux:latest
+    needs: evaluateChanges
+    if: ${{ needs.evaluateChanges.outputs.SHOULD_BUILD == 'true' }}
 
     steps:
     - name: Install Deps
@@ -19,21 +44,28 @@ jobs:
       with:
         submodules: recursive
 
-    - name: Check
+    - name: Check Version
       run: arm-none-eabi-gcc --version
 
     - name: Build
       run: |
         cd stm32code/digital-lock
         make GIT_SUBMODULES=true
-  
+
+    - uses: actions/upload-artifact@v4
+      with:
+        name: digital-lock.hex
+        path: stm32code/digital-lock/build/*.hex
+
   build-flutter:
     runs-on: ubuntu-latest
+    needs: evaluateChanges
+    if: ${{ needs.evaluateChanges.outputs.SHOULD_BUILD == 'true' }}
 
     steps:
     - uses: actions/checkout@v4
 
-    - name: Set up Flutter
+    - name: Setup Flutter
       uses: subosito/flutter-action@v2
       with:
         channel: stable
@@ -63,7 +95,7 @@ jobs:
         echo "keyPassword=$KEYSTORE_PASSWORD" >> key.properties
         echo "keyAlias=$KEYSTORE_ALIAS" >> key.properties
 
-    - name: Check
+    - name: Check Version
       run: flutter doctor
 
     - name: Get Deps
@@ -71,7 +103,17 @@ jobs:
         cd client/digital_lock
         flutter pub get
 
+    - name: Lint
+      run: |
+        cd client/digital_lock
+        flutter analyze
+
     - name: Build
       run: |
         cd client/digital_lock
-        flutter build apk --debug -v
+        flutter build apk --release -v
+
+    - uses: actions/upload-artifact@v4
+      with:
+        name: digital-lock.apk
+        path: client/digital_lock/build/app/outputs/flutter-apk/*.apk

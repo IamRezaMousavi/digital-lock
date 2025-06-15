@@ -33,20 +33,22 @@ class _UserCardState extends State<UserCard> {
     var title = widget.user.name;
 
     if (widget.user.date != null) {
-      final dateTime = DateFormat('yyyy-MM-dd HH:mm')
-          .format(DateTime.fromMillisecondsSinceEpoch(widget.user.date!));
+      final dateTime = DateFormat(
+        'yyyy-MM-dd HH:mm',
+      ).format(DateTime.fromMillisecondsSinceEpoch(widget.user.date!));
       title += ' $dateTime';
     }
 
     return Card(
       child: ListTile(
-          title: Text(title),
-          trailing: OutlinedButton(
-            onPressed: widget.onSend,
-            child: const Text('Send'),
-          ),
-          onTap: widget.onSelect,
-          onLongPress: widget.onDelete),
+        title: Text(title),
+        trailing: OutlinedButton(
+          onPressed: widget.onSend,
+          child: const Text('Send'),
+        ),
+        onTap: widget.onSelect,
+        onLongPress: widget.onDelete,
+      ),
     );
   }
 }

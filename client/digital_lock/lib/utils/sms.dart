@@ -9,21 +9,20 @@ Future<void> sendSms(String to, String message) async {
   await telephony.sendSms(
     to: to,
     message: message,
-    statusListener: (SendStatus status) {
-      Fluttertoast.showToast(msg: 'Message $status');
+    statusListener: (SendStatus status) async {
+      await Fluttertoast.showToast(msg: 'Message $status');
     },
   );
   await Vibration.vibrate(duration: 500);
 }
 
 void reciveSms(Function(SmsMessage) onNewMessage) {
-  Telephony.instance
-    .listenIncomingSms(
-      onNewMessage: (SmsMessage message) async {
-        onNewMessage(message);
-        await Fluttertoast.showToast(msg: 'Sms Recived');
-      },
-      onBackgroundMessage: backgroundMessageHandler
+  Telephony.instance.listenIncomingSms(
+    onNewMessage: (SmsMessage message) async {
+      onNewMessage(message);
+      await Fluttertoast.showToast(msg: 'Sms Recived');
+    },
+    onBackgroundMessage: backgroundMessageHandler,
   );
 }
 

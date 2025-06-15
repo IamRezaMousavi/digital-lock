@@ -21,23 +21,20 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
     final dataStorage = Provider.of<DataStorage>(context);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Center(
-          child: Text('App Settings'),
-        ),
-      ),
+      appBar: AppBar(title: const Center(child: Text('App Settings'))),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SwitchCard(
-                text: 'Enable Dark Mode',
-                value: appTheme.darktheme,
-                onChanged: (value) {
-                  setState(() {
-                    appTheme.tagglethememode();
-                  });
-                }),
+              text: 'Enable Dark Mode',
+              value: appTheme.darktheme,
+              onChanged: (value) {
+                setState(() {
+                  appTheme.tagglethememode();
+                });
+              },
+            ),
             Card(
               child: () {
                 final phoneInput = PhoneNumberInput(

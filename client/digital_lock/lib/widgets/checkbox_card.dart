@@ -22,11 +22,9 @@ class CheckboxCard extends StatefulWidget {
 class _CheckboxCardState extends State<CheckboxCard> {
   @override
   Widget build(BuildContext context) => Card(
-        child: ListTile(
+    child: ListTile(
       title: Text(widget.text),
-      trailing: Checkbox(
-        value: widget.value,
-        onChanged: widget.onChanged,
-      ),
-    ));
+      trailing: Checkbox(value: widget.value, onChanged: widget.onChanged),
+    ),
+  );
 }

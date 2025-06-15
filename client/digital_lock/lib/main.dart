@@ -12,7 +12,7 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AppTheme()),
-        ChangeNotifierProvider(create: (_) => DataStorage())
+        ChangeNotifierProvider(create: (_) => DataStorage()),
       ],
       child: const MyApp(),
     ),

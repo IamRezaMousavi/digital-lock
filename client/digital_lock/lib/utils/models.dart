@@ -4,26 +4,21 @@ class Message {
   String? text;
   int? date;
 
-  Message({
-    this.id,
-    this.address,
-    this.text,
-    this.date,
-  });
+  Message({this.id, this.address, this.text, this.date});
 
   factory Message.fromMap(Map<String, dynamic> json) => Message(
-        id: json['id'],
-        address: json['address'],
-        text: json['text'],
-        date: json['date'],
-      );
+    id: json['id'],
+    address: json['address'],
+    text: json['text'],
+    date: json['date'],
+  );
 
   Map<String, dynamic> toMap() => {
-      'id': id,
-      'address': address,
-      'text': text,
-      'date': date,
-    };
+    'id': id,
+    'address': address,
+    'text': text,
+    'date': date,
+  };
 }
 
 class MessageText {
@@ -32,15 +27,10 @@ class MessageText {
 
   MessageText({required this.name, required this.code});
 
-  factory MessageText.fromMap(Map<String, dynamic> json) => MessageText(
-        name: json['name'],
-        code: json['code'],
-      );
+  factory MessageText.fromMap(Map<String, dynamic> json) =>
+      MessageText(name: json['name'], code: json['code']);
 
-  Map<String, dynamic> toMap() => {
-      'name': name,
-      'code': code,
-    };
+  Map<String, dynamic> toMap() => {'name': name, 'code': code};
 }
 
 class User {
@@ -48,21 +38,10 @@ class User {
   String name;
   int? date;
 
-  User({
-    this.id,
-    required this.name,
-    this.date,
-  });
+  User({this.id, required this.name, this.date});
 
-  factory User.fromMap(Map<String, dynamic> json) => User(
-        id: json['id'],
-        name: json['name'],
-        date: json['date'],
-      );
+  factory User.fromMap(Map<String, dynamic> json) =>
+      User(id: json['id'], name: json['name'], date: json['date']);
 
-  Map<String, dynamic> toMap() => {
-      'id': id,
-      'name': name,
-      'date': date,
-    };
+  Map<String, dynamic> toMap() => {'id': id, 'name': name, 'date': date};
 }

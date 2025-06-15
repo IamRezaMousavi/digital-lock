@@ -79,9 +79,7 @@ class AwesomeSnackbarContent extends StatelessWidget {
     }
 
     return Container(
-      margin: EdgeInsets.symmetric(
-        horizontal: horizontalPadding,
-      ),
+      margin: EdgeInsets.symmetric(horizontal: horizontalPadding),
       height: size.height * 0.125,
       child: Stack(
         clipBehavior: Clip.none,
@@ -108,8 +106,10 @@ class AwesomeSnackbarContent extends StatelessWidget {
                 AssetsPath.bubbles,
                 height: size.height * 0.06,
                 width: size.width * 0.05,
-                colorFilter:
-                    _getColorFilter(hslDark.toColor(), ui.BlendMode.srcIn),
+                colorFilter: _getColorFilter(
+                  hslDark.toColor(),
+                  ui.BlendMode.srcIn,
+                ),
               ),
             ),
           ),
@@ -117,24 +117,28 @@ class AwesomeSnackbarContent extends StatelessWidget {
           // Bubble Icon
           Positioned(
             top: -size.height * 0.02,
-            left: !isRTL
-                ? leftSpace -
-                    8 -
-                    (isMobile ? size.width * 0.075 : size.width * 0.035)
-                : null,
-            right: isRTL
-                ? rightSpace -
-                    8 -
-                    (isMobile ? size.width * 0.075 : size.width * 0.035)
-                : null,
+            left:
+                !isRTL
+                    ? leftSpace -
+                        8 -
+                        (isMobile ? size.width * 0.075 : size.width * 0.035)
+                    : null,
+            right:
+                isRTL
+                    ? rightSpace -
+                        8 -
+                        (isMobile ? size.width * 0.075 : size.width * 0.035)
+                    : null,
             child: Stack(
               alignment: Alignment.center,
               children: [
                 SvgPicture.asset(
                   AssetsPath.back,
                   height: size.height * 0.06,
-                  colorFilter:
-                      _getColorFilter(hslDark.toColor(), ui.BlendMode.srcIn),
+                  colorFilter: _getColorFilter(
+                    hslDark.toColor(),
+                    ui.BlendMode.srcIn,
+                  ),
                 ),
                 Positioned(
                   top: size.height * 0.015,
@@ -142,7 +146,7 @@ class AwesomeSnackbarContent extends StatelessWidget {
                     assetSVG(contentType),
                     height: size.height * 0.022,
                   ),
-                )
+                ),
               ],
             ),
           ),
@@ -155,9 +159,7 @@ class AwesomeSnackbarContent extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
-                  height: size.height * 0.02,
-                ),
+                SizedBox(height: size.height * 0.02),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -167,7 +169,8 @@ class AwesomeSnackbarContent extends StatelessWidget {
                       child: Text(
                         title,
                         style: TextStyle(
-                          fontSize: titleFontSize ??
+                          fontSize:
+                              titleFontSize ??
                               (!isMobile
                                   ? size.height * 0.03
                                   : size.height * 0.025),
@@ -180,8 +183,9 @@ class AwesomeSnackbarContent extends StatelessWidget {
                     InkWell(
                       onTap: () {
                         if (inMaterialBanner) {
-                          ScaffoldMessenger.of(context)
-                              .hideCurrentMaterialBanner();
+                          ScaffoldMessenger.of(
+                            context,
+                          ).hideCurrentMaterialBanner();
                           return;
                         }
                         ScaffoldMessenger.of(context).hideCurrentSnackBar();
@@ -193,9 +197,7 @@ class AwesomeSnackbarContent extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: size.height * 0.005,
-                ),
+                SizedBox(height: size.height * 0.005),
 
                 /// `message` body text parameter
                 Expanded(
@@ -207,12 +209,10 @@ class AwesomeSnackbarContent extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: size.height * 0.015,
-                ),
+                SizedBox(height: size.height * 0.015),
               ],
             ),
-          )
+          ),
         ],
       ),
     );
@@ -243,6 +243,7 @@ class AwesomeSnackbarContent extends StatelessWidget {
   }
 
   static ColorFilter? _getColorFilter(
-          ui.Color? color, ui.BlendMode colorBlendMode) =>
-      color == null ? null : ui.ColorFilter.mode(color, colorBlendMode);
+    ui.Color? color,
+    ui.BlendMode colorBlendMode,
+  ) => color == null ? null : ui.ColorFilter.mode(color, colorBlendMode);
 }

@@ -35,8 +35,9 @@ class _SmsCardState extends State<SmsCard> {
     var title = '';
     if (widget.message.text != null) {
       try {
-        final messageText =
-            MessageText.fromMap(jsonDecode(widget.message.text!));
+        final messageText = MessageText.fromMap(
+          jsonDecode(widget.message.text!),
+        );
         title = '${messageText.name} (${messageText.code})';
       } catch (e) {
         // Json Decode can't parse message text
@@ -46,21 +47,26 @@ class _SmsCardState extends State<SmsCard> {
 
     if (widget.message.date != null) {
       // convert timestamp to human readable
-      final dateTime = DateFormat('yyyy-MM-dd HH:mm')
-          .format(DateTime.fromMillisecondsSinceEpoch(widget.message.date!));
+      final dateTime = DateFormat(
+        'yyyy-MM-dd HH:mm',
+      ).format(DateTime.fromMillisecondsSinceEpoch(widget.message.date!));
       title += ' $dateTime';
     }
 
     return Card(
       child: ListTile(
-          title: title.isNotEmpty ? Text(title) : const Text('Null'),
-          subtitle: widget.message.address != null
-              ? Text(widget.message.address!)
-              : const Text('Null'),
-          trailing: OutlinedButton(
-              onPressed: widget.onSend, child: const Text('Show')),
-          onTap: widget.onSelect,
-          onLongPress: widget.onDelete),
+        title: title.isNotEmpty ? Text(title) : const Text('Null'),
+        subtitle:
+            widget.message.address != null
+                ? Text(widget.message.address!)
+                : const Text('Null'),
+        trailing: OutlinedButton(
+          onPressed: widget.onSend,
+          child: const Text('Show'),
+        ),
+        onTap: widget.onSelect,
+        onLongPress: widget.onDelete,
+      ),
     );
   }
 }

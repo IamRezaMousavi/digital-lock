@@ -22,11 +22,9 @@ class SwitchCard extends StatefulWidget {
 class _SwitchCardState extends State<SwitchCard> {
   @override
   Widget build(BuildContext context) => Card(
-        child: ListTile(
+    child: ListTile(
       title: Text(widget.text),
-      trailing: Switch(
-        value: widget.value,
-        onChanged: widget.onChanged,
-      ),
-    ));
+      trailing: Switch(value: widget.value, onChanged: widget.onChanged),
+    ),
+  );
 }

@@ -34,14 +34,14 @@ class _PhoneNumberInputState extends State<PhoneNumberInput> {
 
   @override
   Widget build(BuildContext context) => TextField(
-      controller: widget.phoneController,
-      decoration: InputDecoration(
-        border: const OutlineInputBorder(),
-        labelText: 'Phone Number',
-        errorText: phonenumberValidator(widget.phoneController.text),
-      ),
-      onChanged: (value) {
-        checkIsValid(value);
-      },
-    );
+    controller: widget.phoneController,
+    decoration: InputDecoration(
+      border: const OutlineInputBorder(),
+      labelText: 'Phone Number',
+      errorText: phonenumberValidator(widget.phoneController.text),
+    ),
+    onChanged: (value) {
+      checkIsValid(value);
+    },
+  );
 }

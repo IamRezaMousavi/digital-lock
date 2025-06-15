@@ -1,41 +1,39 @@
-name: Nightly Build
+name: CI
 
-on:
-  workflow_dispatch: # To run the workflow manually if needed
-  schedule:
-    - cron: '0 0 * * *' # once a day
+on: [push, pull_request]
 
 jobs:
-  clientEvaluateChanges:
-    name: Evaluate changes for run or skipping client nightly build
+  check-arm:
     runs-on: ubuntu-latest
-    outputs:
-      SHOULD_BUILD: ${{ steps.check.outputs.shouldBuild }}
+    container: archlinux:latest
 
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
+    - name: Install Deps
+      run: |
+        pacman -Syu \
+        arm-none-eabi-gcc arm-none-eabi-newlib arm-none-eabi-binutils \
+        make \
+        git --noconfirm
 
-      - name: Check
-        id: check
-        run: |
-          if [[ $(git rev-list --after="24 hours" master client/) ]]; then
-            echo shouldBuild=true >> $GITHUB_OUTPUT
-          else
-            echo shouldBuild=false >> $GITHUB_OUTPUT
-          fi
+    - uses: actions/checkout@v4
+      with:
+        submodules: recursive
 
-  clientBuild:
-    name: Generate client Nightly Build
+    - name: Check Version
+      run: arm-none-eabi-gcc --version
+
+    - name: Build
+      run: |
+        cd stm32code/digital-lock
+        make GIT_SUBMODULES=true
+
+  check-flutter:
     runs-on: ubuntu-latest
-    needs: clientEvaluateChanges
-    if: ${{ needs.clientEvaluateChanges.outputs.SHOULD_BUILD == 'true' }}
 
     steps:
     - uses: actions/checkout@v4
 
-    - name: Set up Flutter
+    - name: Setup Flutter
       uses: subosito/flutter-action@v2
       with:
         channel: stable
@@ -65,24 +63,20 @@ jobs:
         echo "keyPassword=$KEYSTORE_PASSWORD" >> key.properties
         echo "keyAlias=$KEYSTORE_ALIAS" >> key.properties
 
+    - name: Check Version
+      run: flutter doctor
+
     - name: Get Deps
       run: |
         cd client/digital_lock
         flutter pub get
 
+    - name: Lint
+      run: |
+        cd client/digital_lock
+        flutter analyze
+
     - name: Build
       run: |
         cd client/digital_lock
-        flutter build apk --release -v
-
-    - name: Send apk to telegram
-      run: |
-        cd client/digital_lock
-        apk_path=$(find . -type f -iname *.apk | grep flutter-apk)
-        curl https://api.telegram.org/bot${{ secrets.TELEGRAM_TOKEN }}/sendDocument \
-          -F chat_id=${{ secrets.TELEGRAM_CHAT_ID }} \
-          -F message_thread_id=56 \
-          -F "caption=Size: $(ls -l --block-size=K "$apk_path" | awk '{ print $5 }')" \
-          -F parse_mode=HTML \
-          -F document=@"$apk_path"
-
+        flutter build apk --debug -v

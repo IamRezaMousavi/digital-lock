@@ -34,7 +34,10 @@ class _HomePageState extends State<HomePage> {
     });
     reciveSms((SmsMessage message) async {
       final newMessage = Message(
-          address: message.address, text: message.body, date: message.date);
+        address: message.address,
+        text: message.body,
+        date: message.date,
+      );
       final id = await MessagesDB.instance.add(newMessage);
       setState(() {
         newMessage.id = id;
@@ -52,22 +55,21 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Center(
-          child: Text('Digital Lock'),
-        ),
+        title: const Center(child: Text('Digital Lock')),
         leading: IconButton(
           onPressed: () async {
-            await Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => const AppSettingsPage(),
-            ));
+            await Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => const AppSettingsPage()),
+            );
           },
           icon: const Icon(Icons.settings),
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        child: selectedIndex != null
-            ? const Icon(Icons.edit)
-            : const Icon(Icons.add),
+        child:
+            selectedIndex != null
+                ? const Icon(Icons.edit)
+                : const Icon(Icons.add),
         onPressed: () async {
           if (selectedIndex != null) {
             final message = messages[selectedIndex!];
@@ -101,70 +103,70 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Column(
         children: [
-          MyTextField(
-            controller: textController,
-            label: 'Search',
-          ),
+          MyTextField(controller: textController, label: 'Search'),
           Expanded(
-              child: RefreshIndicator(
-            onRefresh: _refresh,
-            child: messages.isEmpty
-                ? const Center(
-                    child: Text('List is empty'),
-                  )
-                : ListView.builder(
-                    itemCount: messages.length,
-                    itemBuilder: (context, index) {
-                      final message = messages[index];
-                      return SmsCard(
-                        message: message,
-                        onSend: () async {
-                          var status = '';
-                          var isOk = false;
-                          if (dataStorage.phoneNumber.isNotEmpty) {
-                            status = 'Ok!';
-                            isOk = true;
-                          } else {
-                            status = 'Not Valid!';
-                            isOk = false;
-                          }
-                          // ignore: use_build_context_synchronously
-                          ScaffoldMessenger.of(context)
-                            ..hideCurrentSnackBar()
-                            ..showSnackBar(SnackBar(
-                              elevation: 0,
-                              behavior: SnackBarBehavior.floating,
-                              backgroundColor: Colors.transparent,
-                              content: AwesomeSnackbarContent(
-                                title: status,
-                                message: message.text ?? '',
-                                contentType: isOk
-                                    ? ContentType.success
-                                    : ContentType.failure,
-                              ),
-                            ));
+            child: RefreshIndicator(
+              onRefresh: _refresh,
+              child:
+                  messages.isEmpty
+                      ? const Center(child: Text('List is empty'))
+                      : ListView.builder(
+                        itemCount: messages.length,
+                        itemBuilder: (context, index) {
+                          final message = messages[index];
+                          return SmsCard(
+                            message: message,
+                            onSend: () async {
+                              var status = '';
+                              var isOk = false;
+                              if (dataStorage.phoneNumber.isNotEmpty) {
+                                status = 'Ok!';
+                                isOk = true;
+                              } else {
+                                status = 'Not Valid!';
+                                isOk = false;
+                              }
+                              // ignore: use_build_context_synchronously
+                              ScaffoldMessenger.of(context)
+                                ..hideCurrentSnackBar()
+                                ..showSnackBar(
+                                  SnackBar(
+                                    elevation: 0,
+                                    behavior: SnackBarBehavior.floating,
+                                    backgroundColor: Colors.transparent,
+                                    content: AwesomeSnackbarContent(
+                                      title: status,
+                                      message: message.text ?? '',
+                                      contentType:
+                                          isOk
+                                              ? ContentType.success
+                                              : ContentType.failure,
+                                    ),
+                                  ),
+                                );
+                            },
+                            onSelect: () {
+                              setState(() {
+                                if (selectedIndex == null) {
+                                  textController.text = message.text ?? '';
+                                  selectedIndex = index;
+                                } else {
+                                  textController.text = '';
+                                  selectedIndex = null;
+                                }
+                              });
+                            },
+                            onDelete: () {
+                              setState(() async {
+                                await MessagesDB.instance.remove(message.id!);
+                                messages.removeAt(index);
+                              });
+                            },
+                          );
                         },
-                        onSelect: () {
-                          setState(() {
-                            if (selectedIndex == null) {
-                              textController.text = message.text ?? '';
-                              selectedIndex = index;
-                            } else {
-                              textController.text = '';
-                              selectedIndex = null;
-                            }
-                          });
-                        },
-                        onDelete: () {
-                          setState(() async {
-                            await MessagesDB.instance.remove(message.id!);
-                            messages.removeAt(index);
-                          });
-                        },
-                      );
-                    },
-                  ),
-          )),
+                      ),
+            ),
+          ),
         ],
       ),
     );

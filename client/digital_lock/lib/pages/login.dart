@@ -19,9 +19,7 @@ class LoginPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Center(
-          child: Text('Digital Lock'),
-        ),
+        title: const Center(child: Text('Digital Lock')),
         automaticallyImplyLeading: false,
       ),
       body: Column(
@@ -30,29 +28,23 @@ class LoginPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               IconButton(
-                icon: appTheme.darktheme
-                    ? const Icon(Icons.dark_mode_outlined)
-                    : const Icon(Icons.light_mode_outlined),
+                icon:
+                    appTheme.darktheme
+                        ? const Icon(Icons.dark_mode_outlined)
+                        : const Icon(Icons.light_mode_outlined),
                 onPressed: () {
                   appTheme.tagglethememode();
                 },
-              )
+              ),
             ],
           ),
           Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset(
-                  'assets/icon/icon.png',
-                  height: 100,
-                  width: 100,
-                ),
+                Image.asset('assets/icon/icon.png', height: 100, width: 100),
                 const SizedBox(height: 50),
-                MyTextField(
-                  controller: phoneController,
-                  label: 'Phone Number',
-                ),
+                MyTextField(controller: phoneController, label: 'Phone Number'),
                 MyTextField(
                   controller: passwordController,
                   label: 'Password',
@@ -61,14 +53,14 @@ class LoginPage extends StatelessWidget {
                 FilledButton(
                   child: const Text('Login'),
                   onPressed: () async {
-                    await Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const MainPage(),
-                    ));
+                    await Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => const MainPage()),
+                    );
                   },
                 ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );

@@ -17,15 +17,15 @@ class MyTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-      child: TextField(
-        controller: controller,
-        obscureText: obscureText,
-        keyboardType: textInputType,
-        decoration: InputDecoration(
-          border: const OutlineInputBorder(),
-          labelText: label,
-        ),
+    padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+    child: TextField(
+      controller: controller,
+      obscureText: obscureText,
+      keyboardType: textInputType,
+      decoration: InputDecoration(
+        border: const OutlineInputBorder(),
+        labelText: label,
       ),
-    );
+    ),
+  );
 }
