@@ -4,7 +4,7 @@
             "name": "Edited",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0"
+                "${workspaceFolder}/STM32CubeF0/**"
             ],
             "defines": [
                 "_DEBUG",

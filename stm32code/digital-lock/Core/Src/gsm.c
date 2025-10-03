@@ -1,23 +1,23 @@
 #include "gsm.h"
-#include "usart.h"
+
 #include <stdio.h>
 
+#include "usart.h"
+
 #if (_GSM_USE_FREERTOS == 1)
-  #include "cmsis_os.h"
-  #define _GSM_DELAY(x) osDelay(x)
+#include "cmsis_os.h"
+#define _GSM_DELAY(x) osDelay(x)
 #else
-  #define _GSM_DELAY(x) HAL_Delay(x)
+#define _GSM_DELAY(x) HAL_Delay(x)
 #endif
 
 /*************** Local varible definitions ******/
 
 /*************** Static declarations ************/
-
 static void Gsm_SendString(char *str);
 static void Gsm_SendData(uint8_t data);
 
 /*************** Public Function definitions ***********/
-
 void gsm_del_all_sms(uint8_t *gsm) {
   Gsm_SendString(DELETE_ALL_SMS);
   Gsm_SendData(Double_Quotation);
@@ -35,8 +35,7 @@ char gsm_get_char() {
 
 void gsm_wait_to_get(char ch) {
   char rec_ch[1];
-  while (ch != rec_ch[0])
-    HAL_UART_Receive(&huart1, (uint8_t *)rec_ch, 1, 200000);
+  while (ch != rec_ch[0]) HAL_UART_Receive(&huart1, (uint8_t *)rec_ch, 1, 200000);
 }
 
 void gsm_read_sms(uint8_t *gsm, char number[13], char *message, int message_size) {
@@ -47,18 +46,15 @@ void gsm_read_sms(uint8_t *gsm, char number[13], char *message, int message_size
   gsm_wait_to_get(',');
   gsm_get_char();
 
-  for (uint8_t i = 0; i < 13; i++)
-    number[i] = gsm_get_char(gsm);
+  for (uint8_t i = 0; i < 13; i++) number[i] = gsm_get_char(gsm);
 
   gsm_wait_to_get(Enter);
 
-  for (int i = 0; i < message_size; i++)
-    message[i] = gsm_get_char(gsm);
+  for (int i = 0; i < message_size; i++) message[i] = gsm_get_char(gsm);
   message[message_size] = '\0';
 }
 
 /*************** Private function definition ****/
-
 void gsm_enable_text_mode(uint8_t *gsm) {
   Gsm_SendString(ENABLE_TEXT_MODE);
   Gsm_SendData(Enter);
@@ -66,7 +62,6 @@ void gsm_enable_text_mode(uint8_t *gsm) {
 }
 
 /*************** Static function definition *****/
-
 void Gsm_SendString(char *str) {
   while (*str != 0) {
     HAL_UART_Transmit(&huart1, (uint8_t *)str, 1, 20000);
@@ -80,7 +75,6 @@ void Gsm_SendData(uint8_t data) {
 }
 
 /***************  template function prototype  ***********/
-
 void Gsm_SendSms(char *phonenumber, char *message) {
   Gsm_SendString("AT\r\n");
   Gsm_SendString("AT+CREG=1\r\n");

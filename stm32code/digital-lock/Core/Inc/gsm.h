@@ -2,7 +2,6 @@
 #define _GSM_H
 
 /*************** Command register ***************/
-
 #define ENABLE_TEXT_MODE    "AT+CMGF=1"
 #define SEND_SMS            "AT+CMGS="
 #define READ_SMS            "AT+CMGR=1"

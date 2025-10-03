@@ -3,14 +3,12 @@
 #include "usart.h"
 
 #define BUFFER_SIZE 14
+#define ANSWER      buffer[10]
 
 uint8_t buffer[BUFFER_SIZE] = {0};
 
-#define ANSWER buffer[10]
-
-void empty_buf(void) {
-  for (uint8_t count = 0; count < BUFFER_SIZE; count++)
-    buffer[count] = 0;
+static void empty_buf(void) {
+  for (uint8_t count = 0; count < BUFFER_SIZE; count++) buffer[count] = 0;
 }
 
 char r308_verifypassword(void) {
@@ -22,14 +20,10 @@ char r308_verifypassword(void) {
   HAL_UART_Receive(&huart2, buffer, 12, 1000);
 
   switch (ANSWER) {
-    case FINGERPRINT_OK:
-      return FINGERPRINT_OK;
-    case FINGERPRINT_PACKETRECIEVEERR:
-      return FINGERPRINT_PACKETRECIEVEERR;
-    case FINGERPRINT_WRONGPASSWORD:
-      return FINGERPRINT_WRONGPASSWORD;
-    default:
-      return -1;
+  case FINGERPRINT_OK:
+  case FINGERPRINT_PACKETRECIEVEERR:
+  case FINGERPRINT_WRONGPASSWORD:    return ANSWER;
+  default:                           return -1;
   }
 }
 
@@ -42,16 +36,11 @@ char r308_getimage(void) {
   HAL_UART_Receive(&huart2, buffer, 12, 1000);
 
   switch (ANSWER) {
-    case FINGERPRINT_OK:
-      return FINGERPRINT_OK;
-    case FINGERPRINT_PACKETRECIEVEERR:
-      return FINGERPRINT_PACKETRECIEVEERR;
-    case FINGERPRINT_NOFINGER:
-      return FINGERPRINT_NOFINGER;
-    case FINGERPRINT_IMAGEFAIL:
-      return FINGERPRINT_IMAGEFAIL;
-    default:
-      return -1;
+  case FINGERPRINT_OK:
+  case FINGERPRINT_PACKETRECIEVEERR:
+  case FINGERPRINT_NOFINGER:
+  case FINGERPRINT_IMAGEFAIL:        return ANSWER;
+  default:                           return -1;
   }
 }
 
@@ -64,16 +53,11 @@ char r308_genchar(char id) {
   HAL_UART_Receive(&huart2, buffer, 12, 1000);
 
   switch (ANSWER) {
-    case FINGERPRINT_OK:
-      return FINGERPRINT_OK;
-    case FINGERPRINT_PACKETRECIEVEERR:
-      return FINGERPRINT_PACKETRECIEVEERR;
-    case FINGERPRINT_IMAGEMESS:
-      return FINGERPRINT_IMAGEMESS;
-    case FINGERPRINT_FEATUREFAIL:
-      return FINGERPRINT_FEATUREFAIL;
-    default:
-      return -1;
+  case FINGERPRINT_OK:
+  case FINGERPRINT_PACKETRECIEVEERR:
+  case FINGERPRINT_IMAGEMESS:
+  case FINGERPRINT_FEATUREFAIL:      return ANSWER;
+  default:                           return -1;
   }
 }
 
@@ -86,14 +70,10 @@ char r308_regmodel(void) {
   HAL_UART_Receive(&huart2, buffer, 12, 1000);
 
   switch (ANSWER) {
-    case FINGERPRINT_OK:
-      return FINGERPRINT_OK;
-    case FINGERPRINT_PACKETRECIEVEERR:
-      return FINGERPRINT_PACKETRECIEVEERR;
-    case FINGERPRINT_ENROLLMISMATCH:
-      return FINGERPRINT_ENROLLMISMATCH;
-    default:
-      return -1;
+  case FINGERPRINT_OK:
+  case FINGERPRINT_PACKETRECIEVEERR:
+  case FINGERPRINT_ENROLLMISMATCH:   return ANSWER;
+  default:                           return -1;
   }
 }
 
@@ -106,16 +86,11 @@ char r308_store(char id) {
   HAL_UART_Receive(&huart2, buffer, 12, 1000);
 
   switch (ANSWER) {
-    case FINGERPRINT_OK:
-      return FINGERPRINT_OK;
-    case FINGERPRINT_PACKETRECIEVEERR:
-      return FINGERPRINT_PACKETRECIEVEERR;
-    case FINGERPRINT_BADLOCATION:
-      return FINGERPRINT_BADLOCATION;
-    case FINGERPRINT_FLASHERR:
-      return FINGERPRINT_FLASHERR;
-    default:
-      return -1;
+  case FINGERPRINT_OK:
+  case FINGERPRINT_PACKETRECIEVEERR:
+  case FINGERPRINT_BADLOCATION:
+  case FINGERPRINT_FLASHERR:         return ANSWER;
+  default:                           return -1;
   }
 }
 
@@ -136,14 +111,10 @@ uint16_t r308_search(void) {
   HAL_UART_Receive(&huart2, buffer, 16, 1000);
 
   switch (ANSWER) {
-    case FINGERPRINT_OK:
-      return buffer[10] + buffer[11];
-    case FINGERPRINT_PACKETRECIEVEERR:
-      return FINGERPRINT_PACKETRECIEVEERR;
-    case FINGERPRINT_NOTFOUND:
-      return FINGERPRINT_NOTFOUND;
-    default:
-      return -1;
+  case FINGERPRINT_OK:               return buffer[10] + buffer[11];
+  case FINGERPRINT_PACKETRECIEVEERR: return FINGERPRINT_PACKETRECIEVEERR;
+  case FINGERPRINT_NOTFOUND:         return FINGERPRINT_NOTFOUND;
+  default:                           return -1;
   }
 }
 
@@ -162,14 +133,10 @@ char r308_deletechar(int id) {
   HAL_UART_Receive(&huart2, buffer, 12, 1000);
 
   switch (ANSWER) {
-    case FINGERPRINT_OK:
-      return FINGERPRINT_OK;
-    case FINGERPRINT_PACKETRECIEVEERR:
-      return FINGERPRINT_PACKETRECIEVEERR;
-    case FINGERPRINT_DELETEFAIL:
-      return FINGERPRINT_DELETEFAIL;
-    default:
-      return -1;
+  case FINGERPRINT_OK:
+  case FINGERPRINT_PACKETRECIEVEERR:
+  case FINGERPRINT_DELETEFAIL:       return ANSWER;
+  default:                           return -1;
   }
 }
 
@@ -182,13 +149,9 @@ char r308_empty(void) {
   HAL_UART_Receive(&huart2, buffer, 12, 1000);
 
   switch (ANSWER) {
-    case FINGERPRINT_OK:
-      return FINGERPRINT_OK;
-    case FINGERPRINT_PACKETRECIEVEERR:
-      return FINGERPRINT_PACKETRECIEVEERR;
-    case FINGERPRINT_DBCLEARFAIL:
-      return FINGERPRINT_DBCLEARFAIL;
-    default:
-      return -1;
+  case FINGERPRINT_OK:
+  case FINGERPRINT_PACKETRECIEVEERR:
+  case FINGERPRINT_DBCLEARFAIL:      return ANSWER;
+  default:                           return -1;
   }
 }

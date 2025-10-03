@@ -1,10 +1,4 @@
-/* An STM32 HAL library written for the DS1307 real-time clock IC. */
-/* Library by @eepj www.github.com/eepj */
-#include "ds1307_for_stm32_hal.h"
-#include "main.h"
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include "ds1307.h"
 
 I2C_HandleTypeDef *_ds1307_ui2c;
 
@@ -238,7 +232,3 @@ uint8_t DS1307_DecodeBCD(uint8_t bin) {
 uint8_t DS1307_EncodeBCD(uint8_t dec) {
   return (dec % 10 + ((dec / 10) << 4));
 }
-
-#ifdef __cplusplus
-}
-#endif

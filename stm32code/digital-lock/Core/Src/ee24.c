@@ -1,32 +1,21 @@
-
-
 #include "ee24.h"
 
 #if (EE24_SIZE <= 2)
-  #define EE24_PSIZE 8
+#define EE24_PSIZE 8
 #elif (EE24_SIZE <= 16)
-  #define EE24_PSIZE 16
+#define EE24_PSIZE 16
 #else
-  #define EE24_PSIZE 32
+#define EE24_PSIZE 32
 #endif
 
-/***********************************************************************************************************/
-
-void EE24_Lock(EE24_HandleTypeDef *Handle) {
-  while (Handle->Lock)
-    EE24_Delay(1);
+static void EE24_Lock(EE24_HandleTypeDef *Handle) {
+  while (Handle->Lock) EE24_Delay(1);
   Handle->Lock = 1;
 }
 
-/***********************************************************************************************************/
-
-void EE24_UnLock(EE24_HandleTypeDef *Handle) {
+static void EE24_UnLock(EE24_HandleTypeDef *Handle) {
   Handle->Lock = 0;
 }
-
-/***********************************************************************************************************/
-/***********************************************************************************************************/
-/***********************************************************************************************************/
 
 bool EE24_Init(EE24_HandleTypeDef *Handle, I2C_HandleTypeDef *HI2c, uint8_t I2CAddress) {
   bool answer = false;
@@ -42,8 +31,6 @@ bool EE24_Init(EE24_HandleTypeDef *Handle, I2C_HandleTypeDef *HI2c, uint8_t I2CA
   return answer;
 }
 
-/***********************************************************************************************************/
-
 bool EE24_Read(EE24_HandleTypeDef *Handle, uint32_t Address, uint8_t *Data, size_t Len, uint32_t Timeout) {
   EE24_Lock(Handle);
   bool answer = false;
@@ -51,22 +38,16 @@ bool EE24_Read(EE24_HandleTypeDef *Handle, uint32_t Address, uint8_t *Data, size
 #if ((EE24_SIZE == EE24_1KBIT) || (EE24_SIZE == EE24_2KBIT))
     if (HAL_I2C_Mem_Read(Handle->HI2c, Handle->Address, Address, I2C_MEMADD_SIZE_8BIT, Data, Len, Timeout) == HAL_OK)
 #elif (EE24_SIZE == EE24_4KBIT)
-    if (HAL_I2C_Mem_Read(
-            Handle->HI2c, Handle->Address | ((Address & 0x0100) >> 7), (Address & 0xff), I2C_MEMADD_SIZE_8BIT, Data,
-            Len, Timeout
-        )
+    if (HAL_I2C_Mem_Read(Handle->HI2c, Handle->Address | ((Address & 0x0100) >> 7), (Address & 0xff),
+                         I2C_MEMADD_SIZE_8BIT, Data, Len, Timeout)
         == HAL_OK)
 #elif (EE24_SIZE == EE24_8KBIT)
-    if (HAL_I2C_Mem_Read(
-            Handle->HI2c, Handle->Address | ((Address & 0x0300) >> 7), (Address & 0xff), I2C_MEMADD_SIZE_8BIT, Data,
-            Len, Timeout
-        )
+    if (HAL_I2C_Mem_Read(Handle->HI2c, Handle->Address | ((Address & 0x0300) >> 7), (Address & 0xff),
+                         I2C_MEMADD_SIZE_8BIT, Data, Len, Timeout)
         == HAL_OK)
 #elif (EE24_SIZE == EE24_16KBIT)
-    if (HAL_I2C_Mem_Read(
-            Handle->HI2c, Handle->Address | ((Address & 0x0700) >> 7), (Address & 0xff), I2C_MEMADD_SIZE_8BIT, Data,
-            Len, Timeout
-        )
+    if (HAL_I2C_Mem_Read(Handle->HI2c, Handle->Address | ((Address & 0x0700) >> 7), (Address & 0xff),
+                         I2C_MEMADD_SIZE_8BIT, Data, Len, Timeout)
         == HAL_OK)
 #else
     if (HAL_I2C_Mem_Read(Handle->HI2c, Handle->Address, Address, I2C_MEMADD_SIZE_16BIT, Data, Len, Timeout) == HAL_OK)
@@ -79,8 +60,6 @@ bool EE24_Read(EE24_HandleTypeDef *Handle, uint32_t Address, uint8_t *Data, size
   EE24_UnLock(Handle);
   return answer;
 }
-
-/***********************************************************************************************************/
 
 bool EE24_Write(EE24_HandleTypeDef *Handle, uint32_t Address, uint8_t *Data, size_t Len, uint32_t Timeout) {
   EE24_Lock(Handle);
@@ -95,22 +74,16 @@ bool EE24_Write(EE24_HandleTypeDef *Handle, uint32_t Address, uint8_t *Data, siz
 #if ((EE24_SIZE == EE24_1KBIT) || (EE24_SIZE == EE24_2KBIT))
       if (HAL_I2C_Mem_Write(Handle->HI2c, Handle->Address, Address, I2C_MEMADD_SIZE_8BIT, Data, Len, Timeout) == HAL_OK)
 #elif (EE24_SIZE == EE24_4KBIT)
-      if (HAL_I2C_Mem_Write(
-              Handle->HI2c, Handle->Address | ((Address & 0x0100) >> 7), (Address & 0xff), I2C_MEMADD_SIZE_8BIT, Data,
-              w, Timeout
-          )
+      if (HAL_I2C_Mem_Write(Handle->HI2c, Handle->Address | ((Address & 0x0100) >> 7), (Address & 0xff),
+                            I2C_MEMADD_SIZE_8BIT, Data, w, Timeout)
           == HAL_OK)
 #elif (EE24_SIZE == EE24_8KBIT)
-      if (HAL_I2C_Mem_Write(
-              Handle->HI2c, Handle->Address | ((Address & 0x0300) >> 7), (Address & 0xff), I2C_MEMADD_SIZE_8BIT, Data,
-              w, Timeout
-          )
+      if (HAL_I2C_Mem_Write(Handle->HI2c, Handle->Address | ((Address & 0x0300) >> 7), (Address & 0xff),
+                            I2C_MEMADD_SIZE_8BIT, Data, w, Timeout)
           == HAL_OK)
 #elif (EE24_SIZE == EE24_16KBIT)
-      if (HAL_I2C_Mem_Write(
-              Handle->HI2c, Handle->Address | ((Address & 0x0700) >> 7), (Address & 0xff), I2C_MEMADD_SIZE_8BIT, Data,
-              w, Timeout
-          )
+      if (HAL_I2C_Mem_Write(Handle->HI2c, Handle->Address | ((Address & 0x0700) >> 7), (Address & 0xff),
+                            I2C_MEMADD_SIZE_8BIT, Data, w, Timeout)
           == HAL_OK)
 #else
       if (HAL_I2C_Mem_Write(Handle->HI2c, Handle->Address, Address, I2C_MEMADD_SIZE_16BIT, Data, w, Timeout) == HAL_OK)
@@ -135,5 +108,3 @@ bool EE24_Write(EE24_HandleTypeDef *Handle, uint32_t Address, uint8_t *Data, siz
   EE24_UnLock(Handle);
   return answer;
 }
-
-/***********************************************************************************************************/
