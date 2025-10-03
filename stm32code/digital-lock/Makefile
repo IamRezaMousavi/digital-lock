@@ -86,7 +86,7 @@ ${STM32_PATH}Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c \
 ${STM32_PATH}Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c \
 ${STM32_PATH}Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/port.c \
 Core/Src/i2c.c \
-Core/Src/ds1307_for_stm32_hal.c \
+Core/Src/ds1307.c \
 Core/Src/ee24.c \
 ${CJSON_PATH}/cJSON.c \
 ${SHA2_PATH}/sha-256.c \

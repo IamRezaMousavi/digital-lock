@@ -1,8 +1,6 @@
 ---
 Language:        Cpp
 BasedOnStyle:  LLVM
-AlignAfterOpenBracket: BlockIndent
-AlignArrayOfStructures: Right
 AlignConsecutiveAssignments:
   Enabled:         true
 AlignConsecutiveBitFields:
@@ -11,12 +9,15 @@ AlignConsecutiveDeclarations:
   Enabled:         true
 AlignConsecutiveMacros:
   Enabled:         true
+AlignConsecutiveShortCaseStatements:
+  Enabled:         true
 AlignEscapedNewlines: Left
-AllowShortBlocksOnASingleLine: Empty
+AllowShortCaseLabelsOnASingleLine: true
 AllowShortEnumsOnASingleLine: false
 AllowShortFunctionsOnASingleLine: Empty
-AllowShortLambdasOnASingleLine: Empty
-AlwaysBreakAfterReturnType: None
+AllowShortLambdasOnASingleLine: All
+AllowShortLoopsOnASingleLine: true
+AlwaysBreakBeforeMultilineStrings: true
 AlwaysBreakTemplateDeclarations: Yes
 BraceWrapping:
   SplitEmptyFunction: false
@@ -25,19 +26,33 @@ BraceWrapping:
 BreakAfterJavaFieldAnnotations: true
 BreakBeforeBinaryOperators: All
 ColumnLimit:     120
-IndentCaseBlocks: true
-IndentCaseLabels: true
-IndentExternBlock: NoIndent
-IndentGotoLabels: false
-IndentPPDirectives: BeforeHash
-IndentWidth:     2
-QualifierAlignment: Left
-RemoveBracesLLVM: true
-SeparateDefinitionBlocks: Always
-SpaceAfterTemplateKeyword: false
-SpaceBeforeCtorInitializerColon: false
-SpaceBeforeInheritanceColon: false
-SpaceBeforeSquareBrackets: false
-SpacesInContainerLiterals: false
+IncludeBlocks:   Regroup
+IncludeCategories:
+  - Regex:           '^<ext/.*\.h>'
+    Priority:        2
+    SortPriority:    0
+    CaseSensitive:   false
+  - Regex:           '^<.*\.h>'
+    Priority:        1
+    SortPriority:    0
+    CaseSensitive:   false
+  - Regex:           '^<.*'
+    Priority:        2
+    SortPriority:    0
+    CaseSensitive:   false
+  - Regex:           '.*'
+    Priority:        3
+    SortPriority:    0
+    CaseSensitive:   false
+IncludeIsMainRegex: '([-_](test|unittest))?$'
+IncludeIsMainSourceRegex: ''
+IndentCaseBlocks: false
+IndentPPDirectives: None
+#IndentWidth:     2
+KeepEmptyLines:
+  AtEndOfFile:     false
+  AtStartOfBlock:  false
+  AtStartOfFile:   false
+SpaceAfterTemplateKeyword: true
 TabWidth:        2
 ...

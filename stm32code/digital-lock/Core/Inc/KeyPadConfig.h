@@ -1,5 +1,6 @@
 #ifndef _KEYPADCONFIG_H
 #define _KEYPADCONFIG_H
+
 #include "gpio.h"
 #include "main.h"
 
@@ -19,4 +20,4 @@ const uint16_t _KEYPAD_ROW_GPIO_PIN[] = {
     DATA6_Pin,
 };
 
-#endif
+#endif /* _KEYPADCONFIG_H */

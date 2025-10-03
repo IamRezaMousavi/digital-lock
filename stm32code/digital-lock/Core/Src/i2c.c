@@ -28,7 +28,6 @@ I2C_HandleTypeDef hi2c2;
 
 /* I2C2 init function */
 void MX_I2C2_Init(void) {
-
   /* USER CODE BEGIN I2C2_Init 0 */
 
   /* USER CODE END I2C2_Init 0 */
@@ -63,7 +62,6 @@ void MX_I2C2_Init(void) {
 }
 
 void HAL_I2C_MspInit(I2C_HandleTypeDef *i2cHandle) {
-
   GPIO_InitTypeDef GPIO_InitStruct = {0};
   if (i2cHandle->Instance == I2C2) {
     /* USER CODE BEGIN I2C2_MspInit 0 */
@@ -92,7 +90,6 @@ void HAL_I2C_MspInit(I2C_HandleTypeDef *i2cHandle) {
 }
 
 void HAL_I2C_MspDeInit(I2C_HandleTypeDef *i2cHandle) {
-
   if (i2cHandle->Instance == I2C2) {
     /* USER CODE BEGIN I2C2_MspDeInit 0 */
 

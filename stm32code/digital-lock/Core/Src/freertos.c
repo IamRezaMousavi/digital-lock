@@ -19,27 +19,29 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "FreeRTOS.h"
+
 #include "cmsis_os.h"
 #include "main.h"
 #include "task.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include <limits.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <string.h>
+#include <time.h>
+
 #include "Fingerprint.h"
 #include "KeyPad.h"
 #include "cJSON.h"
-#include "ds1307_for_stm32_hal.h"
+#include "ds1307.h"
 #include "ee24.h"
 #include "gsm.h"
 #include "lcd.h"
 #include "modes.h"
 #include "sha-256.h"
 #include "usart.h"
-#include <limits.h>
-#include <stdint.h>
-#include <stdio.h>
-#include <string.h>
-#include <time.h>
 
 /* USER CODE END Includes */
 
@@ -122,8 +124,7 @@ void clearVaribles() {
   Lcd_clear(&lcd);
   passwordIndex = 0;
 
-  for (uint8_t i = 0; i < 16; i++)
-    passwordtemp[i] = 0;
+  for (uint8_t i = 0; i < 16; i++) passwordtemp[i] = 0;
 }
 
 void setDateTime() {
@@ -161,8 +162,7 @@ void openLock() {
 }
 
 void hash_to_string(char string[SIZE_OF_SHA_256_HASH_STRING], const uint8_t hash[SIZE_OF_SHA_256_HASH]) {
-  for (size_t i = 0; i < SIZE_OF_SHA_256_HASH; i++)
-    string += sprintf(string, "%02x", hash[i]);
+  for (size_t i = 0; i < SIZE_OF_SHA_256_HASH; i++) string += sprintf(string, "%02x", hash[i]);
 }
 
 int hash_check(const char input[], const char output[]) {
@@ -178,8 +178,7 @@ void checkPasswordAndOpen() {
 
   int result = hash_check(passwordtemp, password);
 
-  if (result == 0) {
-    // if same password
+  if (result) {
     Lcd_clear(&lcd);
     Lcd_string(&lcd, welcomeMessage);
     openLock();
@@ -208,27 +207,26 @@ void smsCallBack(char *message) {
 
   int modeNumber = mode->valuedouble;
   switch (modeNumber) {
-    case SEND_STATUS:
-      cJSON *object = cJSON_CreateObject();
-      char   t[10]  = {0};
-      getDateTime(t);
-      cJSON_AddStringToObject(object, "time", t);
-      cJSON_AddStringToObject(object, "name", "Reza");
-      cJSON_AddNumberToObject(object, "code", 1402);
-      char *ss = cJSON_PrintUnformatted(object);
-      if (ss == NULL)
-        ss = "Null";
+  case SEND_STATUS:
+    cJSON *object = cJSON_CreateObject();
+    char   t[10]  = {0};
+    getDateTime(t);
+    cJSON_AddStringToObject(object, "time", t);
+    cJSON_AddStringToObject(object, "name", "Reza");
+    cJSON_AddNumberToObject(object, "code", 1402);
+    char *ss = cJSON_PrintUnformatted(object);
+    if (ss == NULL)
+      ss = "Null";
 
-      // Gsm_SendSms(phoneNumber, ss);
-      cJSON_Delete(object);
-      break;
+    // Gsm_SendSms(phoneNumber, ss);
+    cJSON_Delete(object);
+    break;
 
-    case GET_SETTINGS_FROM_SMS:
-      // TODO
-      break;
+  case GET_SETTINGS_FROM_SMS:
+    // TODO
+    break;
 
-    default:
-      break;
+  default: break;
   }
 
 end:
@@ -256,29 +254,29 @@ void createUser() {
     Lcd_string(&lcd, "Get Finger 1");
     answer = r308_getimage();
     switch (answer) {
-      case FINGERPRINT_OK:
-        Lcd_clear(&lcd);
-        Lcd_string(&lcd, "FP: OK");
-        break;
+    case FINGERPRINT_OK:
+      Lcd_clear(&lcd);
+      Lcd_string(&lcd, "FP: OK");
+      break;
 
-      default:
-        Lcd_clear(&lcd);
-        Lcd_string(&lcd, "FP: Try again!");
-        break;
+    default:
+      Lcd_clear(&lcd);
+      Lcd_string(&lcd, "FP: Try again!");
+      break;
     }
 
     if (answer == FINGERPRINT_OK) {
       answer = r308_genchar(0x01);
       switch (answer) {
-        case FINGERPRINT_OK:
-          Lcd_clear(&lcd);
-          Lcd_string(&lcd, "FP:GenChar1 OK");
-          break;
+      case FINGERPRINT_OK:
+        Lcd_clear(&lcd);
+        Lcd_string(&lcd, "FP:GenChar1 OK");
+        break;
 
-        default:
-          Lcd_clear(&lcd);
-          Lcd_string(&lcd, "FP:GenChar1 Err");
-          break;
+      default:
+        Lcd_clear(&lcd);
+        Lcd_string(&lcd, "FP:GenChar1 Err");
+        break;
       }
     }
 
@@ -298,29 +296,29 @@ void createUser() {
     Lcd_string(&lcd, "Get Finger 2");
     answer = r308_getimage();
     switch (answer) {
-      case FINGERPRINT_OK:
-        Lcd_clear(&lcd);
-        Lcd_string(&lcd, "FP: OK");
-        break;
+    case FINGERPRINT_OK:
+      Lcd_clear(&lcd);
+      Lcd_string(&lcd, "FP: OK");
+      break;
 
-      default:
-        Lcd_clear(&lcd);
-        Lcd_string(&lcd, "FP: Try again!");
-        break;
+    default:
+      Lcd_clear(&lcd);
+      Lcd_string(&lcd, "FP: Try again!");
+      break;
     }
 
     if (answer == FINGERPRINT_OK) {
       answer = r308_genchar(0x02);
       switch (answer) {
-        case FINGERPRINT_OK:
-          Lcd_clear(&lcd);
-          Lcd_string(&lcd, "FP:GenChar2 OK");
-          break;
+      case FINGERPRINT_OK:
+        Lcd_clear(&lcd);
+        Lcd_string(&lcd, "FP:GenChar2 OK");
+        break;
 
-        default:
-          Lcd_clear(&lcd);
-          Lcd_string(&lcd, "FP:GenChar2 Err");
-          break;
+      default:
+        Lcd_clear(&lcd);
+        Lcd_string(&lcd, "FP:GenChar2 Err");
+        break;
       }
     }
 
@@ -336,33 +334,33 @@ void createUser() {
 
   answer = r308_regmodel();
   switch (answer) {
-    case FINGERPRINT_OK:
-      Lcd_clear(&lcd);
-      Lcd_string(&lcd, "FP:RegModel OK");
-      break;
+  case FINGERPRINT_OK:
+    Lcd_clear(&lcd);
+    Lcd_string(&lcd, "FP:RegModel OK");
+    break;
 
-    default:
-      Lcd_clear(&lcd);
-      Lcd_string(&lcd, "FP:RegModel Err");
-      Lcd_cursor(&lcd, 1, 0);
-      Lcd_string(&lcd, "Ready?");
-      return;
+  default:
+    Lcd_clear(&lcd);
+    Lcd_string(&lcd, "FP:RegModel Err");
+    Lcd_cursor(&lcd, 1, 0);
+    Lcd_string(&lcd, "Ready?");
+    return;
   }
 
   answer = r308_store(userLastId);
   switch (answer) {
-    case FINGERPRINT_OK:
-      Lcd_clear(&lcd);
-      char s[16] = {0};
-      sprintf(s, "ID: %d", userLastId);
-      Lcd_string(&lcd, s);
-      break;
+  case FINGERPRINT_OK:
+    Lcd_clear(&lcd);
+    char s[16] = {0};
+    sprintf(s, "ID: %d", userLastId);
+    Lcd_string(&lcd, s);
+    break;
 
-    default:
-      Lcd_string(&lcd, "FP: onSave Err");
-      Lcd_cursor(&lcd, 1, 0);
-      Lcd_string(&lcd, "Ready?");
-      return;
+  default:
+    Lcd_string(&lcd, "FP: onSave Err");
+    Lcd_cursor(&lcd, 1, 0);
+    Lcd_string(&lcd, "Ready?");
+    return;
   }
 
   if (answer == FINGERPRINT_OK) {
@@ -392,48 +390,46 @@ void readUser() {
   Lcd_string(&lcd, "Get Finger");
   answer = r308_getimage();
   switch (answer) {
-    case FINGERPRINT_OK:
-      break;
+  case FINGERPRINT_OK: break;
 
-    default:
-      Lcd_clear(&lcd);
-      Lcd_string(&lcd, "FP: Try again!");
-      osDelay(3000); // to show message
-      return;
+  default:
+    Lcd_clear(&lcd);
+    Lcd_string(&lcd, "FP: Try again!");
+    osDelay(3000); // to show message
+    return;
   }
 
   answer = r308_genchar(0x01);
   switch (answer) {
-    case FINGERPRINT_OK:
-      break;
+  case FINGERPRINT_OK: break;
 
-    default:
-      Lcd_clear(&lcd);
-      Lcd_string(&lcd, "FP:GenChar Err");
-      osDelay(3000);
-      break;
+  default:
+    Lcd_clear(&lcd);
+    Lcd_string(&lcd, "FP:GenChar Err");
+    osDelay(3000);
+    break;
   }
 
   uint16_t search_answer = r308_search();
   switch (search_answer) {
-    case FINGERPRINT_PACKETRECIEVEERR:
-      Lcd_clear(&lcd);
-      Lcd_string(&lcd, "PF: Rec Err");
-      break;
+  case FINGERPRINT_PACKETRECIEVEERR:
+    Lcd_clear(&lcd);
+    Lcd_string(&lcd, "PF: Rec Err");
+    break;
 
-    case FINGERPRINT_NOTFOUND:
-      Lcd_clear(&lcd);
-      Lcd_string(&lcd, "FP: Not Found");
-      osDelay(relayDelay * 1000);
-      break;
+  case FINGERPRINT_NOTFOUND:
+    Lcd_clear(&lcd);
+    Lcd_string(&lcd, "FP: Not Found");
+    osDelay(relayDelay * 1000);
+    break;
 
-    default:
-      Lcd_clear(&lcd);
-      char buffer[16];
-      sprintf(buffer, "%s %d", welcomeMessage, search_answer);
-      Lcd_string(&lcd, buffer);
-      openLock();
-      break;
+  default:
+    Lcd_clear(&lcd);
+    char buffer[16];
+    sprintf(buffer, "%s %d", welcomeMessage, search_answer);
+    Lcd_string(&lcd, buffer);
+    openLock();
+    break;
   }
 
   activeMode = NORMAL;
@@ -524,23 +520,22 @@ void StartCounterTask(void *argument) {
   uint16_t i = 0;
   for (;;) {
     switch (activeMode) {
-      case NORMAL:
-        // show time in lcd
-        Lcd_cursor(&lcd, 0, 0);
+    case NORMAL:
+      // show time in lcd
+      Lcd_cursor(&lcd, 0, 0);
 
-        char t[16] = {0};
-        getDateTime(t);
-        Lcd_string(&lcd, t);
-        Lcd_cursor(&lcd, 1, passwordIndex);
-        break;
+      char t[16] = {0};
+      getDateTime(t);
+      Lcd_string(&lcd, t);
+      Lcd_cursor(&lcd, 1, passwordIndex);
+      break;
 
-      case LOCK:
-        Lcd_cursor(&lcd, 0, 0);
-        Lcd_string(&lcd, "DISABLE MODE");
-        break;
+    case LOCK:
+      Lcd_cursor(&lcd, 0, 0);
+      Lcd_string(&lcd, "DISABLE MODE");
+      break;
 
-      default:
-        break;
+    default: break;
     }
 
     if (i < USHRT_MAX)
@@ -565,25 +560,18 @@ void StartKeypadTask(void *argument) {
   KeyPad_Init();
 
   // wait for lcd initialisation done
-  while (!lcd.en_pin)
-    osDelay(500);
+  while (!lcd.en_pin) osDelay(500);
 
   FINGERPRINT_ON;
   char ans = -1;
   for (uint8_t i = 0; i < 5; i++) {
     ans = r308_verifypassword();
     switch (ans) {
-      case FINGERPRINT_OK:
-        break;
-      case FINGERPRINT_PACKETRECIEVEERR:
-        Lcd_string(&lcd, "FP Error!");
-        break;
-      case FINGERPRINT_WRONGPASSWORD:
-        Lcd_string(&lcd, "FP: Wrong PW!");
-        break;
+    case FINGERPRINT_OK:               break;
+    case FINGERPRINT_PACKETRECIEVEERR: Lcd_string(&lcd, "FP Error!"); break;
+    case FINGERPRINT_WRONGPASSWORD:    Lcd_string(&lcd, "FP: Wrong PW!"); break;
 
-      default:
-        break;
+    default: break;
     }
 
     if (ans == FINGERPRINT_OK)
@@ -594,78 +582,60 @@ void StartKeypadTask(void *argument) {
   for (;;) {
     char input_key;
     switch (activeMode) {
-      case NORMAL:
-        input_key = KeyPad_WaitForKeyGetChar(0);
+    case NORMAL:
+      input_key = KeyPad_WaitForKeyGetChar(0);
 
-        if (input_key >= '0' && input_key <= '9') {
-          // get a password
-          char key_buffer[2];
-          sprintf(key_buffer, "*");
-          Lcd_string(&lcd, key_buffer);
-          passwordtemp[passwordIndex] = input_key;
+      if (input_key >= '0' && input_key <= '9') {
+        // get a password
+        char key_buffer[2];
+        sprintf(key_buffer, "*");
+        Lcd_string(&lcd, key_buffer);
+        passwordtemp[passwordIndex] = input_key;
 
-          passwordIndex++;
-          if (passwordIndex > 15)
-            passwordIndex = 0;
-        } // else
-          // get a command
-        break;
+        passwordIndex++;
+        if (passwordIndex > 15)
+          passwordIndex = 0;
+      } // else
+        // get a command
+      break;
 
-      case LOCK:
-        input_key = KeyPad_WaitForKeyGetChar(0);
-        break;
+    case LOCK: input_key = KeyPad_WaitForKeyGetChar(0); break;
 
-      // USER CRUD Operations
-      case CREATE_USER:
-        createUser();
-        continue;
+    // USER CRUD Operations
+    case CREATE_USER: createUser(); continue;
 
-      case READ_USER:
-        readUser();
-        continue;
+    case READ_USER: readUser(); continue;
 
-      case UPDATE_USER:
-        updateUser();
-        continue;
+    case UPDATE_USER: updateUser(); continue;
 
-      case DELETE_USER:
-        deleteUser();
-        continue;
+    case DELETE_USER: deleteUser(); continue;
 
-      default:
-        // dont run below statements
-        continue;
+    default:
+      // dont run below statements
+      continue;
     }
 
     // for NORMAL and LOCK mode
     switch (input_key) {
-      case 'A':
-        if (activeMode == NORMAL)
-          checkPasswordAndOpen();
-        break;
+    case 'A':
+      if (activeMode == NORMAL)
+        checkPasswordAndOpen();
+      break;
 
-      case 'D':
-        activeMode = activeMode == NORMAL ? LOCK : NORMAL;
-        clearVaribles();
-        break;
+    case 'D':
+      activeMode = activeMode == NORMAL ? LOCK : NORMAL;
+      clearVaribles();
+      break;
 
-      case 'B':
-        activeMode = WRITE_SETTINGS_TO_EEPROM;
-        break;
+    case 'B': activeMode = WRITE_SETTINGS_TO_EEPROM; break;
 
-      case 'C':
-        createUser();
-        break;
+    case 'C': createUser(); break;
 
-      case '*':
-        break;
+    case '*': break;
 
-      case '#':
-        readUser();
-        break;
+    case '#': readUser(); break;
 
-      default:
-        break;
+    default: break;
     }
   }
   /* USER CODE END StartKeypadTask */

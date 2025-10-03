@@ -1,17 +1,17 @@
 #include "KeyPad.h"
+
 #include "KeyPadConfig.h"
 #include "gpio.h"
 
 #if (_KEYPAD_USE_FREERTOS == 1)
-  #include "cmsis_os.h"
-  #define _KEYPAD_DELAY(x) osDelay(x)
+#include "cmsis_os.h"
+#define _KEYPAD_DELAY(x) osDelay(x)
 #else
-  #define _KEYPAD_DELAY(x) HAL_Delay(x)
+#define _KEYPAD_DELAY(x) HAL_Delay(x)
 #endif
 
 KeyPad_t KeyPad;
 
-// #############################################################################################
 void KeyPad_Init(void) {
   GPIO_InitTypeDef gpio;
   KeyPad.ColumnSize = sizeof(_KEYPAD_COLUMN_GPIO_PIN) / 2;
@@ -33,7 +33,6 @@ void KeyPad_Init(void) {
   }
 }
 
-// #############################################################################################
 uint16_t KeyPad_Scan(void) {
   uint16_t key = 0;
   for (uint8_t c = 0; c < KeyPad.ColumnSize; c++) {
@@ -57,7 +56,6 @@ uint16_t KeyPad_Scan(void) {
   return key;
 }
 
-// #############################################################################################
 uint16_t KeyPad_WaitForKey(uint32_t Timeout_ms) {
   uint16_t keyRead;
   while (Timeout_ms == 0) {
@@ -81,43 +79,25 @@ uint16_t KeyPad_WaitForKey(uint32_t Timeout_ms) {
   return 0;
 }
 
-// #############################################################################################
 char KeyPad_WaitForKeyGetChar(uint32_t Timeout_ms) {
   switch (KeyPad_WaitForKey(Timeout_ms)) {
-    case 0x0101:
-      return '1';
-    case 0x0102:
-      return '2';
-    case 0x0104:
-      return '3';
-    case 0x0108:
-      return 'A';
-    case 0x0201:
-      return '4';
-    case 0x0202:
-      return '5';
-    case 0x0204:
-      return '6';
-    case 0x0208:
-      return 'B';
-    case 0x0401:
-      return '7';
-    case 0x0402:
-      return '8';
-    case 0x0404:
-      return '9';
-    case 0x0408:
-      return 'C';
-    case 0x0801:
-      return '*';
-    case 0x0802:
-      return '0';
-    case 0x0804:
-      return '#';
-    case 0x0808:
-      return 'D';
+  case 0x0101: return '1';
+  case 0x0102: return '2';
+  case 0x0104: return '3';
+  case 0x0108: return 'A';
+  case 0x0201: return '4';
+  case 0x0202: return '5';
+  case 0x0204: return '6';
+  case 0x0208: return 'B';
+  case 0x0401: return '7';
+  case 0x0402: return '8';
+  case 0x0404: return '9';
+  case 0x0408: return 'C';
+  case 0x0801: return '*';
+  case 0x0802: return '0';
+  case 0x0804: return '#';
+  case 0x0808: return 'D';
 
-    default:
-      return 0;
+  default: return 0;
   }
 }

@@ -1,18 +1,12 @@
-/*
- * lcd.c
- *
- *  Created on: 10/06/2018
- *      Author: Olivier Van den Eede
- */
-
 #include "lcd.h"
+
 #include <stdio.h>
 #include <string.h>
 
 const uint8_t ROW_16[] = {0x00, 0x40, 0x10, 0x50};
 const uint8_t ROW_20[] = {0x00, 0x40, 0x14, 0x54};
-/************************************** Static declarations **************************************/
 
+/************************************** Static declarations **************************************/
 static void lcd_write_data(Lcd_HandleTypeDef *lcd, uint8_t data);
 static void lcd_write_command(Lcd_HandleTypeDef *lcd, uint8_t command);
 static void lcd_write(Lcd_HandleTypeDef *lcd, uint8_t data, uint8_t len);
@@ -22,10 +16,8 @@ static void lcd_write(Lcd_HandleTypeDef *lcd, uint8_t data, uint8_t len);
 /**
  * Create new Lcd_HandleTypeDef and initialize the Lcd
  */
-Lcd_HandleTypeDef Lcd_create(
-    Lcd_PortType port[], Lcd_PinType pin[], Lcd_PortType rs_port, Lcd_PinType rs_pin, Lcd_PortType en_port,
-    Lcd_PinType en_pin, Lcd_ModeTypeDef mode
-) {
+Lcd_HandleTypeDef Lcd_create(Lcd_PortType port[], Lcd_PinType pin[], Lcd_PortType rs_port, Lcd_PinType rs_pin,
+                             Lcd_PortType en_port, Lcd_PinType en_pin, Lcd_ModeTypeDef mode) {
   Lcd_HandleTypeDef lcd;
 
   lcd.mode = mode;
@@ -52,8 +44,9 @@ void Lcd_init(Lcd_HandleTypeDef *lcd) {
     lcd_write_command(lcd, 0x33);
     lcd_write_command(lcd, 0x32);
     lcd_write_command(lcd, FUNCTION_SET | OPT_N); // 4-bit mode
-  } else
+  } else {
     lcd_write_command(lcd, FUNCTION_SET | OPT_DL | OPT_N);
+  }
 
   lcd_write_command(lcd, CLEAR_DISPLAY);                  // Clear screen
   lcd_write_command(lcd, DISPLAY_ON_OFF_CONTROL | OPT_D); // Lcd-on, cursor-off, no-blink
@@ -74,8 +67,7 @@ void Lcd_int(Lcd_HandleTypeDef *lcd, int number) {
  * Write a string on the current position
  */
 void Lcd_string(Lcd_HandleTypeDef *lcd, char *string) {
-  for (uint8_t i = 0; i < strlen(string); i++)
-    lcd_write_data(lcd, string[i]);
+  for (uint8_t i = 0; i < strlen(string); i++) lcd_write_data(lcd, string[i]);
 }
 
 /**
@@ -100,8 +92,7 @@ void Lcd_clear(Lcd_HandleTypeDef *lcd) {
 
 void Lcd_define_char(Lcd_HandleTypeDef *lcd, uint8_t code, uint8_t bitmap[]) {
   lcd_write_command(lcd, SETCGRAM_ADDR + (code << 3));
-  for (uint8_t i = 0; i < 8; ++i)
-    lcd_write_data(lcd, bitmap[i]);
+  for (uint8_t i = 0; i < 8; ++i) lcd_write_data(lcd, bitmap[i]);
 }
 
 /************************************** Static function definition
@@ -139,8 +130,7 @@ void lcd_write_data(Lcd_HandleTypeDef *lcd, uint8_t data) {
  * Set len bits on the bus and toggle the enable line
  */
 void lcd_write(Lcd_HandleTypeDef *lcd, uint8_t data, uint8_t len) {
-  for (uint8_t i = 0; i < len; i++)
-    HAL_GPIO_WritePin(lcd->data_port[i], lcd->data_pin[i], (data >> i) & 0x01);
+  for (uint8_t i = 0; i < len; i++) HAL_GPIO_WritePin(lcd->data_port[i], lcd->data_pin[i], (data >> i) & 0x01);
 
   HAL_GPIO_WritePin(lcd->en_port, lcd->en_pin, 1);
   DELAY(1);

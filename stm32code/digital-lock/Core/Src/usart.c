@@ -30,7 +30,6 @@ UART_HandleTypeDef huart2;
 /* USART1 init function */
 
 void MX_USART1_UART_Init(void) {
-
   /* USER CODE BEGIN USART1_Init 0 */
 
   /* USER CODE END USART1_Init 0 */
@@ -58,7 +57,6 @@ void MX_USART1_UART_Init(void) {
 /* USART2 init function */
 
 void MX_USART2_UART_Init(void) {
-
   /* USER CODE BEGIN USART2_Init 0 */
 
   /* USER CODE END USART2_Init 0 */
@@ -84,7 +82,6 @@ void MX_USART2_UART_Init(void) {
 }
 
 void HAL_UART_MspInit(UART_HandleTypeDef *uartHandle) {
-
   GPIO_InitTypeDef GPIO_InitStruct = {0};
   if (uartHandle->Instance == USART1) {
     /* USER CODE BEGIN USART1_MspInit 0 */
@@ -134,7 +131,6 @@ void HAL_UART_MspInit(UART_HandleTypeDef *uartHandle) {
 }
 
 void HAL_UART_MspDeInit(UART_HandleTypeDef *uartHandle) {
-
   if (uartHandle->Instance == USART1) {
     /* USER CODE BEGIN USART1_MspDeInit 0 */
 
