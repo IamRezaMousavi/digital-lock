@@ -46,11 +46,11 @@ void gsm_read_sms(uint8_t *gsm, char number[13], char *message, int message_size
   gsm_wait_to_get(',');
   gsm_get_char();
 
-  for (uint8_t i = 0; i < 13; i++) number[i] = gsm_get_char(gsm);
+  for (uint8_t i = 0; i < 13; i++) number[i] = gsm_get_char();
 
   gsm_wait_to_get(Enter);
 
-  for (int i = 0; i < message_size; i++) message[i] = gsm_get_char(gsm);
+  for (int i = 0; i < message_size; i++) message[i] = gsm_get_char();
   message[message_size] = '\0';
 }
 
