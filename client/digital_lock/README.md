@@ -1,36 +1,90 @@
-# Digital Lock Client (Android)
+# Digital Lock Client
 
-A client app for integrate and manage the digital lock module.
+Flutter-based Android application for managing and controlling the **Digital Lock** system.
 
-## Usage
+The application provides an intuitive interface for interacting with the embedded device, allowing users to authenticate, manage settings, and monitor the lock remotely.
 
-### Getting Started
+---
 
-You need to install
+## Features
 
-* [Flutter](https://docs.flutter.dev/get-started/install)
-* [Android Studio](https://developer.android.com/studio/install) (and sdk)
-* [VS Code](https://docs.flutter.dev/get-started/editor?tab=vscode) (recommended for code editing)
+* User authentication
+* Manage registered users
+* Configure lock settings
+* Communicate with the Digital Lock device
+* Modern Material Design interface
+* Built with Flutter
 
-For build **Android** app, you must follow [this steps for Sign the app](https://docs.flutter.dev/deployment/android#sign-the-app)
-And run:
+---
+
+## Technologies
+
+* Flutter
+* Dart
+* Provider
+* SQLite
+* Shared Preferences
+
+---
+
+## Requirements
+
+Install the following tools before building the project.
+
+| Tool | Purpose |
+| --- | --- |
+| [Flutter](https://docs.flutter.dev/get-started/install) | Application development |
+| [Android Studio](https://developer.android.com/studio/install) | Android SDK and emulator |
+| [VS Code](https://code.visualstudio.com/) | Code editor |
+
+---
+
+## Getting Started
+
+1. Install Dependencies
+
+    ```bash
+    flutter pub get
+    ```
+
+2. Build Release APK
+
+    > Before creating a release build, configure Android app signing as described in the Flutter documentation.
+
+    Then build the application:
+
+    ```bash
+    flutter build apk --release
+    ```
+
+The generated APK can be found at:
 
 ```bash
-flutter build apk --verbose
+build/app/outputs/flutter-apk/app-release.apk
 ```
 
-Then you can see the output apk file in `build/app/outputs/apk/release/app-release.apk`
+---
 
-### Format The Code
+## Code Formatting
 
-Run this command on base directory:
+Format the source code using:
 
 ```bash
 dart format .
 ```
 
+---
+
 ## Screenshots
 
-Login Page | Main Page | User Page | Settings Page
---- | --- | --- | ---
-![login-page](./screenshots/Picture0.jpg) | ![main-page](./screenshots/Picture1.jpg) | ![users-page](./screenshots/Picture2.jpg) | ![settings-page](./screenshots/Picture3.jpg)
+| Login Page | Main Page | User Page | Settings Page |
+| --- | --- | --- | --- |
+| ![login-page](./screenshots/Picture0.jpg) | ![main-page](./screenshots/Picture1.jpg) | ![users-page](./screenshots/Picture2.jpg) | ![settings-page](./screenshots/Picture3.jpg) |
+
+---
+
+## License
+
+This project is licensed under the MIT License unless stated otherwise.
+
+---
